@@ -1,5 +1,5 @@
 package frc.robot.commands;
 
-public class Hopper {
+public class HopperDown {
     
 }

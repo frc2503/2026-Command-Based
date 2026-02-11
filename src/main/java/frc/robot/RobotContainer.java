@@ -4,11 +4,21 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import static frc.robot.Constants.OperatorConstants.*;
+import frc.robot.subsystems.FuelSubsystem;
+import frc.robot.commands.Conveyor;
+import frc.robot.commands.HopperUp;
+import frc.robot.commands.HopperDown;
+import frc.robot.commands.Intake;
 
 public class RobotContainer {
+
+  private final FuelSubsystem fuelSubsystem = new FuelSubsystem();
 
     // The driver's controller
   private final CommandXboxController driverController = new CommandXboxController(DRIVER_CONTROLLER_PORT);
@@ -20,7 +30,11 @@ public class RobotContainer {
     configureBindings();
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+      operatorController.rightBumper().whileTrue(new HopperUp(fuelSubsystem));
+      operatorController.leftBumper().whileTrue(new HopperDown(fuelSubsystem));
+      operatorController.a().whileTrue(new Intake(fuelSubsystem));
+  }
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");

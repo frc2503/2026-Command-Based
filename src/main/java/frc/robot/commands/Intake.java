@@ -5,7 +5,7 @@ package frc.robot.commands;
 //the hopper goes back in and the intake motors stop.
 //when climbing or doing anything that could be messy with the intake motors, we just have that command disable them.
 
-public class Intake extends Command{
+public class Intake{
 
 }
 

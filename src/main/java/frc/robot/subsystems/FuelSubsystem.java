@@ -21,6 +21,7 @@ public class FuelSubsystem extends SubsystemBase {
     public FuelSubsystem() {
 
     //Setting the motors-------------------------------------------------------
+
         HopperMotor = new SparkMax(HOPPER_ID, MotorType.kBrushless);
         IntakeMotor = new SparkMax(INTAKE_ID, MotorType.kBrushless);
         FeederMotor = new SparkMax(FEEDER_ID, MotorType.kBrushless);
@@ -44,7 +45,6 @@ public class FuelSubsystem extends SubsystemBase {
         feederConfig.smartCurrentLimit(FEEDER_CURRENT_LIMIT);
         FeederMotor.configure(feederConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
-
     //Setting motor voltage--------------------------------------------------
 
     public void setIntakeMotor(double voltage) {
@@ -68,5 +68,5 @@ public class FuelSubsystem extends SubsystemBase {
         IntakeMotor.set(0);
         HopperMotor.set(0);
     }   
-
 }
+

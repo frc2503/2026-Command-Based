@@ -3,8 +3,8 @@ package frc.robot.subsystems;
 //defines all the motors for the fuel commands.
 
 import com.revrobotics.spark.SparkBase;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.ResetMode;
+import com.revrobotics.PersistMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -38,7 +38,7 @@ public class FuelSubsystem extends SubsystemBase {
         SparkMaxConfig hopperConfig = new SparkMaxConfig();
         hopperConfig.smartCurrentLimit(HOPPER_CURRENT_LIMIT);
         hopperConfig.closedLoop.pid(HOPPER_KP, HOPPER_KI, HOPPER_KD);
-        hopperConfig.encoder.positionConversionFactor(1.0); // Adjust if gear ratio is known
+        hopperConfig.encoder.positionConversionFactor(1.0);
         HopperMotor.configure(hopperConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         HopperController = HopperMotor.getClosedLoopController();
 
@@ -69,7 +69,7 @@ public class FuelSubsystem extends SubsystemBase {
     private boolean isHopperUp = false;
 
     public void setHopperPosition(double degrees) {
-        HopperController.setReference(degrees, SparkBase.ControlType.kPosition);
+        HopperController.setSetpoint(degrees, SparkBase.ControlType.kPosition);
         if (degrees == HOPPER_UP_DEGREES) {
             isHopperUp = true;
         } else if (degrees == HOPPER_DOWN_DEGREES) {

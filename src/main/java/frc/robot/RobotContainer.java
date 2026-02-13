@@ -9,9 +9,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import static frc.robot.Constants.OperatorConstants.*;
 import frc.robot.subsystems.FuelSubsystem;
-import frc.robot.commands.Conveyor;
-import frc.robot.commands.ToggleHopper;
-import frc.robot.commands.Intake;
+import frc.robot.commands.FuelCommand;
+import frc.robot.commands.ToggleIntake;
+import frc.robot.commands.ReverseFuelCommand;
 
 public class RobotContainer {
 
@@ -28,9 +28,9 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-      operatorController.rightBumper().onTrue(new ToggleHopper(fuelSubsystem));
-      operatorController.a().whileTrue(new Intake(fuelSubsystem));
-      operatorController.b().whileTrue(new Conveyor(fuelSubsystem));
+      operatorController.rightBumper().onTrue(new ToggleIntake(fuelSubsystem));
+      operatorController.a().whileTrue(new FuelCommand(fuelSubsystem));
+      operatorController.b().whileTrue(new ReverseFuelCommand(fuelSubsystem));
   }
 
   public Command getAutonomousCommand() {

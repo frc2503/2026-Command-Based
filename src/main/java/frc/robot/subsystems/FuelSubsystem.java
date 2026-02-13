@@ -15,32 +15,32 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkMax;
 
 public class FuelSubsystem extends SubsystemBase {
-    private final SparkMax HopperMotor;
-    private final SparkClosedLoopController HopperController;
+    private final SparkMax IntakeActionMotor;
+    private final SparkClosedLoopController IntakeActionController;
     private final SparkMax IntakeMotor;
     private final SparkClosedLoopController IntakeController;
-    private final SparkMax FeederMotor;
-    private final SparkClosedLoopController FeederController;
-    private final SparkMax ConveyorMotor;
-    private final SparkClosedLoopController ConveyorController;
+    private final SparkMax TowerMotor;
+    private final SparkClosedLoopController TowerController;
+    private final SparkMax HopperMotor;
+    private final SparkClosedLoopController HopperController;
 
     public FuelSubsystem() {
 
     //Setting the motors-------------------------------------------------------
 
-        HopperMotor = new SparkMax(HOPPER_ID, MotorType.kBrushless);
+        IntakeActionMotor = new SparkMax(INTAKE_ACTION_ID, MotorType.kBrushless);
         IntakeMotor = new SparkMax(INTAKE_ID, MotorType.kBrushless);
-        FeederMotor = new SparkMax(FEEDER_ID, MotorType.kBrushless);
-        ConveyorMotor = new SparkMax(CONVEYOR_ID, MotorType.kBrushless);
+        TowerMotor = new SparkMax(TOWER_ID, MotorType.kBrushless);
+        HopperMotor = new SparkMax(HOPPER_ID, MotorType.kBrushless);
 
     //Defining the Motors------------------------------------------------------
 
-        SparkMaxConfig hopperConfig = new SparkMaxConfig();
-        hopperConfig.smartCurrentLimit(HOPPER_CURRENT_LIMIT);
-        hopperConfig.closedLoop.pid(HOPPER_KP, HOPPER_KI, HOPPER_KD);
-        hopperConfig.encoder.positionConversionFactor(1.0);
-        HopperMotor.configure(hopperConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        HopperController = HopperMotor.getClosedLoopController();
+        SparkMaxConfig intakeActionConfig = new SparkMaxConfig();
+        intakeActionConfig.smartCurrentLimit(INTAKE_ACTION_CURRENT_LIMIT);
+        intakeActionConfig.closedLoop.pid(INTAKE_ACTION_KP, INTAKE_ACTION_KI, INTAKE_ACTION_KD);
+        intakeActionConfig.encoder.positionConversionFactor(1.0);
+        IntakeActionMotor.configure(intakeActionConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        IntakeActionController = IntakeActionMotor.getClosedLoopController();
 
         SparkMaxConfig intakeConfig = new SparkMaxConfig();
         intakeConfig.smartCurrentLimit(INTAKE_CURRENT_LIMIT);
@@ -48,17 +48,17 @@ public class FuelSubsystem extends SubsystemBase {
         IntakeMotor.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         IntakeController = IntakeMotor.getClosedLoopController();
 
-        SparkMaxConfig conveyorConfig = new SparkMaxConfig();
-        conveyorConfig.smartCurrentLimit(CONVEYOR_CURRENT_LIMIT);
-        conveyorConfig.closedLoop.pid(CONVEYOR_KP, CONVEYOR_KI, CONVEYOR_KD);
-        ConveyorMotor.configure(conveyorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        ConveyorController = ConveyorMotor.getClosedLoopController();
+        SparkMaxConfig hopperConfig = new SparkMaxConfig();
+        hopperConfig.smartCurrentLimit(HOPPER_CURRENT_LIMIT);
+        hopperConfig.closedLoop.pid(HOPPER_KP, HOPPER_KI, HOPPER_KD);
+        HopperMotor.configure(hopperConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        HopperController = HopperMotor.getClosedLoopController();
 
-        SparkMaxConfig feederConfig = new SparkMaxConfig();
-        feederConfig.smartCurrentLimit(FEEDER_CURRENT_LIMIT);
-        feederConfig.closedLoop.pid(FEEDER_KP, FEEDER_KI, FEEDER_KD);
-        FeederMotor.configure(feederConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        FeederController = FeederMotor.getClosedLoopController();
+        SparkMaxConfig towerConfig = new SparkMaxConfig();
+        towerConfig.smartCurrentLimit(TOWER_CURRENT_LIMIT);
+        towerConfig.closedLoop.pid(TOWER_KP, TOWER_KI, TOWER_KD);
+        TowerMotor.configure(towerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        TowerController = TowerMotor.getClosedLoopController();
     }
     //Setting motor position and speed--------------------------------------------------
 
@@ -66,38 +66,41 @@ public class FuelSubsystem extends SubsystemBase {
         IntakeController.setSetpoint(rpm, SparkMax.ControlType.kVelocity);
     }
 
-    private boolean isHopperUp = false;
+    private boolean isIntakeUp = false;
 
-    public void setHopperPosition(double degrees) {
-        HopperController.setSetpoint(degrees, SparkBase.ControlType.kPosition);
-        if (degrees == HOPPER_UP_DEGREES) {
-            isHopperUp = true;
-        } else if (degrees == HOPPER_DOWN_DEGREES) {
-            isHopperUp = false;
+    public void setIntakePosition(double degrees) {
+        IntakeActionController.setSetpoint(degrees, SparkBase.ControlType.kPosition);
+        if (degrees == INTAKE_ACTION_UP_DEGREES) {
+            isIntakeUp = true;
+        } else if (degrees == INTAKE_ACTION_DOWN_DEGREES) {
+            isIntakeUp = false;
         }
     }
 
-    public void toggleHopper() {
-        if (isHopperUp) {
-            setHopperPosition(HOPPER_DOWN_DEGREES);
+    public void toggleIntake() {
+        if (isIntakeUp) {
+            setIntakePosition(INTAKE_ACTION_DOWN_DEGREES);
         } else {
-            setHopperPosition(HOPPER_UP_DEGREES);
+            setIntakePosition(INTAKE_ACTION_UP_DEGREES);
         }
     }
 
-    public void setConveyorVelocity(double rpm) {
-        ConveyorController.setSetpoint(rpm, SparkMax.ControlType.kVelocity);
+    public boolean isIntakeUp() {
+        return isIntakeUp;
     }
 
-    public void setFeederVelocity(double rpm) {
-        FeederController.setSetpoint(rpm, SparkMax.ControlType.kVelocity);
+    public void setHopperVelocity(double rpm) {
+        HopperController.setSetpoint(rpm, SparkMax.ControlType.kVelocity);
+    }
+
+    public void setTowerVelocity(double rpm) {
+        TowerController.setSetpoint(rpm, SparkMax.ControlType.kVelocity);
     }
 
     public void stop(){
-        FeederMotor.set(0);
-        ConveyorMotor.set(0);
-        IntakeMotor.set(0);
+        TowerMotor.set(0);
         HopperMotor.set(0);
+        IntakeMotor.set(0);
+        IntakeActionMotor.set(0);
     }   
 }
-

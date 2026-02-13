@@ -32,7 +32,7 @@ public class RobotContainer {
   private void configureBindings() {
       operatorController.rightBumper().onTrue(new ToggleHopper(fuelSubsystem));
       operatorController.a().whileTrue(new Intake(fuelSubsystem));
-      operatorController.b().whileTrue(new Conveyor(fuelSubsystem))
+      operatorController.b().whileTrue(new Conveyor(fuelSubsystem));
   }
 
   public Command getAutonomousCommand() {

@@ -28,9 +28,9 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-      operatorController.rightBumper().onTrue(new ToggleIntake(fuelSubsystem));
-      operatorController.a().whileTrue(new FuelCommand(fuelSubsystem));
-      operatorController.b().whileTrue(new ReverseFuelCommand(fuelSubsystem));
+      operatorController.leftBumper().onTrue(new ToggleIntake(fuelSubsystem));
+      operatorController.rightBumper().whileTrue(new FuelCommand(fuelSubsystem));
+      operatorController.rightTrigger().whileTrue(new ReverseFuelCommand(fuelSubsystem));
   }
 
   public Command getAutonomousCommand() {

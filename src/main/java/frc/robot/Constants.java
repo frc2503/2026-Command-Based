@@ -13,11 +13,27 @@ public final class Constants {
     public static final int HOPPER_CURRENT_LIMIT = 60;
     public static final int FEEDER_CURRENT_LIMIT = 60;
 
-    public static final double INTAKE_VOLTAGE = 12;
-    public static final double CONVEYOR_VOLTAGE = 12;
-    public static final double HOPPER_UP_VOLTAGE = 12;
-    public static final double HOPPER_DOWN_VOLTAGE = -12;
-    public static final double FEEDER_VOLTAGE = 12;
+    public static final double INTAKE_KP = 0.0001;
+    public static final double INTAKE_KI = 0.0;
+    public static final double INTAKE_KD = 0.0;
+    public static final double INTAKE_RPM = 2000;
+
+    public static final double CONVEYOR_KP = 0.0001;
+    public static final double CONVEYOR_KI = 0.0;
+    public static final double CONVEYOR_KD = 0.0;
+    public static final double CONVEYOR_RPM = 2000;
+    
+    public static final double FEEDER_KP = 0.0001;
+    public static final double FEEDER_KI = 0.0;
+    public static final double FEEDER_KD = 0.0;
+    public static final double FEEDER_RPM = 2000;
+
+    public static final double HOPPER_KP = 0.1;
+    public static final double HOPPER_KI = 0.0;
+    public static final double HOPPER_KD = 0.0;
+
+    public static final double HOPPER_UP_DEGREES = 90.0;
+    public static final double HOPPER_DOWN_DEGREES = -90.0;
   
   }
 

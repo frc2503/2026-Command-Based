@@ -12,8 +12,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import static frc.robot.Constants.OperatorConstants.*;
 import frc.robot.subsystems.FuelSubsystem;
 import frc.robot.commands.Conveyor;
-import frc.robot.commands.HopperUp;
-import frc.robot.commands.HopperDown;
+import frc.robot.commands.ToggleHopper;
 import frc.robot.commands.Intake;
 
 public class RobotContainer {
@@ -31,9 +30,9 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-      operatorController.rightBumper().whileTrue(new HopperUp(fuelSubsystem));
-      operatorController.leftBumper().whileTrue(new HopperDown(fuelSubsystem));
+      operatorController.rightBumper().onTrue(new ToggleHopper(fuelSubsystem));
       operatorController.a().whileTrue(new Intake(fuelSubsystem));
+      operatorController.b().whileTrue(new Conveyor(fuelSubsystem))
   }
 
   public Command getAutonomousCommand() {

@@ -6,18 +6,31 @@ import frc.robot.subsystems.FuelSubsystem;
 import static frc.robot.Constants.FuelConstants.*;
 
 
-public class Intake{
+import edu.wpi.first.wpilibj2.command.Command;
+
+public class Intake extends Command {
     FuelSubsystem fuelSubsystem;
+
+    public Intake(FuelSubsystem fuelSubsystem) {
+        this.fuelSubsystem = fuelSubsystem;
+        addRequirements(fuelSubsystem);
+    }
 //on initialization-------------------------------
+    @Override
     public void initialize(){
-        fuelSubsystem
-            .setIntakeMotor(INTAKE_VOLTAGE);
-        fuelSubsystem
-            .setConveyorMotor(CONVEYOR_VOLTAGE);
-        fuelSubsystem
-            .setFeederMotor(FEEDER_VOLTAGE);
+        fuelSubsystem.setIntakeVelocity(INTAKE_RPM);
+        fuelSubsystem.setConveyorVelocity(CONVEYOR_RPM);
+        fuelSubsystem.setFeederVelocity(FEEDER_RPM);
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        fuelSubsystem.setIntakeVelocity(0);
+        fuelSubsystem.setConveyorVelocity(0);
+        fuelSubsystem.setFeederVelocity(0);
     }
 //On finished-------------------------------------
+    @Override
     public boolean isFinished() {
         return false;
     }

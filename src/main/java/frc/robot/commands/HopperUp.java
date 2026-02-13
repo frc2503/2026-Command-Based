@@ -5,15 +5,23 @@ import static frc.robot.Constants.FuelConstants.*;
 
 //moves the intake up, when its not collecting fuel.
 
-public class HopperUp {
+import edu.wpi.first.wpilibj2.command.Command;
+
+public class HopperUp extends Command {
     FuelSubsystem fuelSubsystem;
 
+    public HopperUp(FuelSubsystem fuelSubsystem) {
+        this.fuelSubsystem = fuelSubsystem;
+        addRequirements(fuelSubsystem);
+    }
+
 //On initialization-----------------------------
+    @Override
     public void initialize(){
-        fuelSubsystem
-            .setHopperMotor(HOPPER_UP_VOLTAGE);
+        fuelSubsystem.setHopperPosition(HOPPER_UP_DEGREES);
     }
 //On finished-----------------------------------
+    @Override
     public boolean isFinished() {
         return false;
     }

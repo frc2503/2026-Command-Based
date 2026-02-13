@@ -2,8 +2,10 @@ package frc.robot.subsystems;
 
 //defines all the motors for the fuel commands.
 
+import com.revrobotics.spark.SparkBase;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
@@ -14,9 +16,13 @@ import com.revrobotics.spark.SparkMax;
 
 public class FuelSubsystem extends SubsystemBase {
     private final SparkMax HopperMotor;
+    private final SparkClosedLoopController HopperController;
     private final SparkMax IntakeMotor;
+    private final SparkClosedLoopController IntakeController;
     private final SparkMax FeederMotor;
+    private final SparkClosedLoopController FeederController;
     private final SparkMax ConveyorMotor;
+    private final SparkClosedLoopController ConveyorController;
 
     public FuelSubsystem() {
 
@@ -31,35 +37,60 @@ public class FuelSubsystem extends SubsystemBase {
 
         SparkMaxConfig hopperConfig = new SparkMaxConfig();
         hopperConfig.smartCurrentLimit(HOPPER_CURRENT_LIMIT);
+        hopperConfig.closedLoop.pid(HOPPER_KP, HOPPER_KI, HOPPER_KD);
+        hopperConfig.encoder.positionConversionFactor(1.0); // Adjust if gear ratio is known
         HopperMotor.configure(hopperConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        HopperController = HopperMotor.getClosedLoopController();
 
         SparkMaxConfig intakeConfig = new SparkMaxConfig();
         intakeConfig.smartCurrentLimit(INTAKE_CURRENT_LIMIT);
+        intakeConfig.closedLoop.pid(INTAKE_KP, INTAKE_KI, INTAKE_KD);
         IntakeMotor.configure(intakeConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        IntakeController = IntakeMotor.getClosedLoopController();
 
         SparkMaxConfig conveyorConfig = new SparkMaxConfig();
         conveyorConfig.smartCurrentLimit(CONVEYOR_CURRENT_LIMIT);
+        conveyorConfig.closedLoop.pid(CONVEYOR_KP, CONVEYOR_KI, CONVEYOR_KD);
         ConveyorMotor.configure(conveyorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        ConveyorController = ConveyorMotor.getClosedLoopController();
 
         SparkMaxConfig feederConfig = new SparkMaxConfig();
         feederConfig.smartCurrentLimit(FEEDER_CURRENT_LIMIT);
+        feederConfig.closedLoop.pid(FEEDER_KP, FEEDER_KI, FEEDER_KD);
         FeederMotor.configure(feederConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        FeederController = FeederMotor.getClosedLoopController();
     }
-    //Setting motor voltage--------------------------------------------------
+    //Setting motor position and speed--------------------------------------------------
 
-    public void setIntakeMotor(double voltage) {
-        IntakeMotor.setVoltage(voltage);
-    }
-    public void setHopperMotor(double voltage) {
-        HopperMotor.setVoltage(voltage);
+    public void setIntakeVelocity(double rpm) {
+        IntakeController.setSetpoint(rpm, SparkMax.ControlType.kVelocity);
     }
 
-    public void setConveyorMotor(double voltage) {
-        ConveyorMotor.setVoltage(voltage);
+    private boolean isHopperUp = false;
+
+    public void setHopperPosition(double degrees) {
+        HopperController.setReference(degrees, SparkBase.ControlType.kPosition);
+        if (degrees == HOPPER_UP_DEGREES) {
+            isHopperUp = true;
+        } else if (degrees == HOPPER_DOWN_DEGREES) {
+            isHopperUp = false;
+        }
     }
 
-    public void setFeederMotor(double voltage) {
-        FeederMotor.setVoltage(voltage);
+    public void toggleHopper() {
+        if (isHopperUp) {
+            setHopperPosition(HOPPER_DOWN_DEGREES);
+        } else {
+            setHopperPosition(HOPPER_UP_DEGREES);
+        }
+    }
+
+    public void setConveyorVelocity(double rpm) {
+        ConveyorController.setSetpoint(rpm, SparkMax.ControlType.kVelocity);
+    }
+
+    public void setFeederVelocity(double rpm) {
+        FeederController.setSetpoint(rpm, SparkMax.ControlType.kVelocity);
     }
 
     public void stop(){

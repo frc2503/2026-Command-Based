@@ -3,45 +3,37 @@ package frc.robot.commands;
 import static frc.robot.Constants.FuelConstants.*;
 
 import edu.wpi.first.wpilibj2.command.Command;
-
-//Intake up: runs only hopper and tower motors.
-//Intake down: runs intake, hopper, and tower motors.
-
-import frc.robot.subsystems.FuelSubsystem;
+import frc.robot.subsystems.IntakeArmSubsystem;
+import frc.robot.subsystems.IntakeRollerSubsystem;
+import frc.robot.subsystems.HopperSubsystem;
 
 public class FuelCommand extends Command {
 
-    FuelSubsystem fuelSubsystem;
+    private final IntakeRollerSubsystem intakeRollerSubsystem;
+    private final HopperSubsystem hopperSubsystem;
 
-    public FuelCommand(FuelSubsystem fuelSubsystem) {
-        this.fuelSubsystem = fuelSubsystem;
-        addRequirements(fuelSubsystem);
+    public FuelCommand(IntakeArmSubsystem intakeArmSubsystem, IntakeRollerSubsystem intakeRollerSubsystem, HopperSubsystem hopperSubsystem) {
+        this.intakeRollerSubsystem = intakeRollerSubsystem;
+        this.hopperSubsystem = hopperSubsystem;
+        addRequirements(intakeRollerSubsystem, hopperSubsystem);
     }
 
-//On initialization-----------------------------
     @Override
     public void initialize(){
-        if (fuelSubsystem.isIntakeUp()) {
-            // Intake is up: run only hopper and tower
-            fuelSubsystem.setIntakeVelocity(0);
-            fuelSubsystem.setHopperVelocity(HOPPER_RPM);
-            fuelSubsystem.setTowerVelocity(TOWER_RPM);
-        } else {
-            // Intake is down: run intake, hopper, and tower
-            fuelSubsystem.setIntakeVelocity(INTAKE_RPM);
-            fuelSubsystem.setHopperVelocity(HOPPER_RPM);
-            fuelSubsystem.setTowerVelocity(TOWER_RPM);
-        }
+        intakeRollerSubsystem.setIntakeVelocity(INTAKE_ROLLER_RPM);
+        hopperSubsystem.setHopperVelocity(HOPPER_RPM);
+    }
+
+    @Override
+    public void execute() {
     }
 
     @Override
     public void end(boolean interrupted) {
-        fuelSubsystem.setIntakeVelocity(0);
-        fuelSubsystem.setHopperVelocity(0);
-        fuelSubsystem.setTowerVelocity(0);
+        intakeRollerSubsystem.setIntakeVelocity(0);
+        hopperSubsystem.setHopperVelocity(0);
     }
 
-//On finished-----------------------------------
     @Override
     public boolean isFinished() {
         return false;

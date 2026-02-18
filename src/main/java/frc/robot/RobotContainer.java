@@ -11,8 +11,7 @@ import frc.robot.commands.*;
 
 public class RobotContainer {
 
-  private final IntakeArmSubsystem intakeArmSubsystem = new IntakeArmSubsystem();
-  private final IntakeRollerSubsystem intakeRollerSubsystem = new IntakeRollerSubsystem(intakeArmSubsystem);
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
   private final TowerSubsystem towerSubsystem = new TowerSubsystem();
 
@@ -32,10 +31,10 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
-      operatorController.leftBumper().onTrue(new ToggleIntakeArm(intakeArmSubsystem));
-      operatorController.rightTrigger().whileTrue(new FuelCommand(intakeArmSubsystem, intakeRollerSubsystem, hopperSubsystem));
+      operatorController.leftBumper().onTrue(new ToggleIntakeArm(intakeSubsystem));
+      operatorController.rightTrigger().whileTrue(new FuelCommand(intakeSubsystem, hopperSubsystem));
       operatorController.rightBumper().whileTrue(new FeedCommand(towerSubsystem));
-      operatorController.leftTrigger().whileTrue(new ReverseFuelCommand(intakeRollerSubsystem, hopperSubsystem, towerSubsystem));
+      operatorController.leftTrigger().whileTrue(new ReverseFuelCommand(intakeSubsystem, hopperSubsystem, towerSubsystem));
   }
 
   public Command getAutonomousCommand() {

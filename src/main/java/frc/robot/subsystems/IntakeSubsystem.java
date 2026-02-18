@@ -48,9 +48,14 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void setIntakePosition(double degrees) {
         intakeArmController.setSetpoint(degrees, SparkBase.ControlType.kPosition);
-        if (degrees == INTAKE_ARM_UP_DEGREES) {
+    }
+
+    @Override
+    public void periodic() {
+        double currentPosition = intakeArmMotor.getEncoder().getPosition();
+        if (Math.abs(currentPosition - INTAKE_ARM_UP_DEGREES) < 5) { // 5 degrees tolerance
             isIntakeUp = true;
-        } else if (degrees == INTAKE_ARM_DOWN_DEGREES) {
+        } else {
             isIntakeUp = false;
         }
     }

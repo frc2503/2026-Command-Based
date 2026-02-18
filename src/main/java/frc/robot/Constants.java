@@ -32,10 +32,9 @@ public final class Constants {
     public static final double INTAKE_ARM_KI = 0.0;
     public static final double INTAKE_ARM_KD = 0.0;
 
-    public static final double INTAKE_ARM_GEAR_RATIO = 1;
-    public static final double INTAKE_ARM_CONVERSION_FACTOR = 1;
+    public static final double INTAKE_ARM_GEAR_RATIO = 20;
     public static final double INTAKE_ARM_UP_DEGREES = 0;
-    public static final double INTAKE_ARM_DOWN_DEGREES = -90.0;
+    public static final double INTAKE_ARM_DOWN_DEGREES = 90.0;
   }
 
   public final class OperatorConstants{

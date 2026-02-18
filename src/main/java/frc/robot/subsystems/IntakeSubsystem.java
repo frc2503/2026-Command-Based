@@ -7,6 +7,7 @@ import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+
 import static frc.robot.Constants.FuelConstants.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.revrobotics.spark.SparkMax;
@@ -25,7 +26,7 @@ public class IntakeSubsystem extends SubsystemBase {
         SparkMaxConfig intakeArmConfig = new SparkMaxConfig();
         intakeArmConfig.smartCurrentLimit(INTAKE_ARM_CURRENT_LIMIT);
         intakeArmConfig.closedLoop.pid(INTAKE_ARM_KP, INTAKE_ARM_KI, INTAKE_ARM_KD);
-        intakeArmConfig.encoder.positionConversionFactor((INTAKE_ARM_CONVERSION_FACTOR/INTAKE_ARM_GEAR_RATIO)*360);
+        intakeArmConfig.encoder.positionConversionFactor((360/INTAKE_ARM_GEAR_RATIO));
         intakeArmMotor.configure(intakeArmConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         intakeArmController = intakeArmMotor.getClosedLoopController();
 

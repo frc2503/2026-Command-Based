@@ -7,19 +7,11 @@ public final class Constants {
     public static final int HOPPER_ID = 2;
     public static final int INTAKE_ARM_ID = 3;
     public static final int TOWER_ID = 4;
-    public static final int TURRET_SPIN_ID = 5;
-    public static final int TURRET_FLYWHEEL_ID = 6;
-    public static final int TURRET_AIM_ID = 7;
 
     public static final int INTAKE_ROLLER_CURRENT_LIMIT = 60;
     public static final int HOPPER_CURRENT_LIMIT = 60;
     public static final int INTAKE_ARM_CURRENT_LIMIT = 60;
     public static final int TOWER_CURRENT_LIMIT = 60;
-    public static final int TURRET_SPIN_CURRENT_LIMIT = 60;
-    public static final int TURRET_FLYWHEEL_CURRENT_LIMIT = 60;
-    public static final int TURRET_AIM_CURRENT_LIMIT = 60;
-
-
 
     public static final double INTAKE_ROLLER_KP = 0.0001;
     public static final double INTAKE_ROLLER_KI = 0.0;
@@ -44,23 +36,6 @@ public final class Constants {
     public static final double INTAKE_ARM_CONVERSION_FACTOR = 1;
     public static final double INTAKE_ARM_UP_DEGREES = 0;
     public static final double INTAKE_ARM_DOWN_DEGREES = -90.0;
-
-    public static final double TURRET_FLYWHEEL_KP = 0.0001;
-    public static final double TURRET_FLYWHEEL_KI = 0.0;
-    public static final double TURRET_FLYWHEEL_KD = 0.0;
-    public static final double TURRET_FLYWHEEL_RPM = 2000;
-
-    public static final double TURRET_SPIN_KP = 0.0001;
-    public static final double TURRET_SPIN_KI = 0.0;
-    public static final double TURRET_SPIN_KD = 0.0;
-    public static final double TURRET_SPIN_RPM = 2000;
-  
-    public static final double TURRET_AIM_KP = 0.0001;
-    public static final double TURRET_AIM_KI = 0.0;
-    public static final double TURRET_AIM_KD = 0.0;
-    public static final double TURRET_AIM_RPM = 2000;
-
-    public static final double TURRET_AIM_DEGREES = 90;
   }
 
   public final class OperatorConstants{

@@ -13,7 +13,7 @@ public class RobotContainer {
 
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
-  private final TowerSubsystem towerSubsystem = new TowerSubsystem();
+  private final LaunchSubsystem towerSubsystem = new LaunchSubsystem();
 
     // The driver's controller
   private final CommandXboxController driverController = new CommandXboxController(DRIVER_CONTROLLER_PORT);

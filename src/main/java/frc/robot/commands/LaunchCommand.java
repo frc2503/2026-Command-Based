@@ -4,24 +4,25 @@ package frc.robot.commands;
 
 import static frc.robot.Constants.FuelConstants.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.TowerSubsystem;
+import frc.robot.subsystems.LaunchSubsystem;
 
 public class LaunchCommand extends Command {
-    private final TowerSubsystem towerSubsystem;
+    private final LaunchSubsystem launchSubsystem;
 
-    public LaunchCommand(TowerSubsystem towerSubsystem) {
-        this.towerSubsystem = towerSubsystem;
-        addRequirements(towerSubsystem);
+    public LaunchCommand(LaunchSubsystem launchSubsystem) {
+        this.launchSubsystem = launchSubsystem;
+        addRequirements(launchSubsystem);
     }
 
     @Override
     public void initialize() {
-        towerSubsystem.setTower(TOWER_VOLTAGE);
+        launchSubsystem.setLaunch1(LAUNCH_1_VOLTAGE);
+        launchSubsystem.setLaunch2(LAUNCH_2_VOLTAGE);
     }
 
     @Override
     public void end(boolean interrupted) {
-        towerSubsystem.stop();
+        launchSubsystem.stop();
     }
 
     @Override

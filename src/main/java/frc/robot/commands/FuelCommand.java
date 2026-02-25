@@ -19,8 +19,8 @@ public class FuelCommand extends Command {
 
     @Override
     public void initialize(){
-        intakeSubsystem.setIntakeVelocity(INTAKE_ROLLER_RPM);
-        hopperSubsystem.setHopperVelocity(HOPPER_RPM);
+        intakeSubsystem.setIntake(INTAKE_ROLLER_VOLTAGE);
+        hopperSubsystem.setHopper(HOPPER_VOLTAGE);
     }
 
     @Override
@@ -29,8 +29,8 @@ public class FuelCommand extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        intakeSubsystem.setIntakeVelocity(0);
-        hopperSubsystem.setHopperVelocity(0);
+        intakeSubsystem.setIntake(0);
+        hopperSubsystem.setHopper(0);
     }
 
     @Override

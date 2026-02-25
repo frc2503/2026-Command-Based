@@ -16,7 +16,6 @@ public class IntakeSubsystem extends SubsystemBase {
     private final SparkMax intakeArmMotor;
     private final SparkClosedLoopController intakeArmController;
     private final SparkMax intakeRollerMotor;
-    private final SparkClosedLoopController intakeRollerController;
 
     private boolean isIntakeUp = false;
 
@@ -34,17 +33,11 @@ public class IntakeSubsystem extends SubsystemBase {
 
         SparkMaxConfig intakeRollerConfig = new SparkMaxConfig();
         intakeRollerConfig.smartCurrentLimit(INTAKE_ROLLER_CURRENT_LIMIT);
-        intakeRollerConfig.closedLoop.pid(INTAKE_ROLLER_KP, INTAKE_ROLLER_KI, INTAKE_ROLLER_KD);
         intakeRollerMotor.configure(intakeRollerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        intakeRollerController = intakeRollerMotor.getClosedLoopController();
     }
 
-    public void setIntakeVelocity(double rpm) {
-        if (isIntakeUp() && rpm != 0) {
-            intakeRollerController.setSetpoint(0, SparkMax.ControlType.kVelocity);
-        } else {
-            intakeRollerController.setSetpoint(rpm, SparkMax.ControlType.kVelocity);
-        }
+    public void setIntake(double voltage) {
+        intakeRollerMotor.set(voltage);
     }
 
     public void setIntakePosition(double degrees) {

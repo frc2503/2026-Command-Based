@@ -22,16 +22,16 @@ public class ReverseFuelCommand extends Command {
 
     @Override
     public void initialize() {
-        intakeSubsystem.setIntakeVelocity(-INTAKE_ROLLER_RPM);
-        hopperSubsystem.setHopperVelocity(-HOPPER_RPM);
-        towerSubsystem.setTowerVelocity(-TOWER_RPM);
+        intakeSubsystem.setIntake(INTAKE_ROLLER_VOLTAGE);
+        hopperSubsystem.setHopper(HOPPER_VOLTAGE);
+        towerSubsystem.setTower(TOWER_VOLTAGE);
     }
 
     @Override
     public void end(boolean interrupted) {
-        intakeSubsystem.setIntakeVelocity(0);
-        hopperSubsystem.setHopperVelocity(0);
-        towerSubsystem.setTowerVelocity(0);
+        intakeSubsystem.setIntake(0);
+        hopperSubsystem.setHopper(0);
+        towerSubsystem.setTower(0);
     }
 
     @Override

@@ -26,14 +26,14 @@ public class RobotContainer {
 
     // Default command for hopper to keep it running at a low speed to prevent binding
     hopperSubsystem.setDefaultCommand(
-      Commands.run(() -> hopperSubsystem.setHopperVelocity(HOPPER_RPM * 0.1), hopperSubsystem)
+      Commands.run(() -> hopperSubsystem.setHopper(HOPPER_VOLTAGE * 0.1), hopperSubsystem)
     );
   }
 
   private void configureBindings() {
       operatorController.leftBumper().onTrue(new ToggleIntakeArm(intakeSubsystem));
       operatorController.rightTrigger().whileTrue(new FuelCommand(intakeSubsystem, hopperSubsystem));
-      operatorController.rightBumper().whileTrue(new FeedCommand(towerSubsystem));
+      operatorController.rightBumper().whileTrue(new LaunchCommand(towerSubsystem));
       operatorController.leftTrigger().whileTrue(new ReverseFuelCommand(intakeSubsystem, hopperSubsystem, towerSubsystem));
   }
 

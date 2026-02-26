@@ -10,16 +10,19 @@ import frc.robot.subsystems.*;
 import frc.robot.commands.*;
 
 public class RobotContainer {
-
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
-  private final LaunchSubsystem towerSubsystem = new LaunchSubsystem();
-
-    // The driver's controller
+  // The driver's controller
   private final CommandXboxController driverController = new CommandXboxController(DRIVER_CONTROLLER_PORT);
 
   // The operator's controller
   private final CommandXboxController operatorController = new CommandXboxController(OPERATOR_CONTROLLER_PORT);
+
+  private final VisionSubsystem visionSubsystem = new VisionSubsystem();
+
+  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(visionSubsystem);
+  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> driverController.getLeftX(), () -> -driverController.getLeftY(), () -> -driverController.getRightX(), () -> true);
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
+  private final LaunchSubsystem towerSubsystem = new LaunchSubsystem();
 
   public RobotContainer() {
     configureBindings();
@@ -29,7 +32,6 @@ public class RobotContainer {
       Commands.run(() -> hopperSubsystem.setHopper(HOPPER_VOLTAGE * 0.1), hopperSubsystem)
     );
   }
-
   private void configureBindings() {
       operatorController.leftBumper().onTrue(new ToggleIntakeArm(intakeSubsystem));
       operatorController.rightTrigger().whileTrue(new FuelCommand(intakeSubsystem, hopperSubsystem));
@@ -39,5 +41,9 @@ public class RobotContainer {
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
+  }
+
+  public void onTeleopInit() {
+    swerveSubsystem.setDefaultCommand(swerveCommand);
   }
 }

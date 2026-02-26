@@ -1,6 +1,27 @@
 package frc.robot;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.units.measure.Distance;
+import edu.wpi.first.units.measure.LinearVelocity;
+
 public final class Constants {
+  public static final NetworkTableInstance NETWORK_TABLE = NetworkTableInstance.getDefault();
+
+  public static final LinearVelocity MAXIMUM_VELOCITY = Units.MetersPerSecond.of(4);
+  public static final AngularVelocity MAXIMUM_ANGULAR_VELOCITY = Units.DegreesPerSecond.of(270);
+  public static final LinearVelocity MAXIMUM_MODULE_VELOCITY = Units.MetersPerSecond.of(5);
+
+  public static final AprilTagFieldLayout APRIL_TAG_LAYOUT = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltAndymark);
+  public static final Distance FIELD_LENGTH = Units.Inch.of(651.22);
+  public static final Distance FIELD_WIDTH = Units.Inch.of(317.69);
+  public static final Distance ALLIANCE_ZONE_WIDTH = Units.Inch.of(182.11);
+
+  public static final String LEFT_LIMELIGHT_NAME = "left";
+  public static final String RIGHT_LIMELIGHT_NAME = "right";
 
   public final class FuelConstants{
 

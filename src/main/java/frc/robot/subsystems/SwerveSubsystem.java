@@ -47,6 +47,9 @@ public class SwerveSubsystem extends SubsystemBase {
         translation = translation.getNorm() > 0.075 ? translation.times(Constants.MAXIMUM_VELOCITY.in(MetersPerSecond)) : Translation2d.kZero;
         rot = Math.abs(rot) > 0.075 ? rot * Constants.MAXIMUM_ANGULAR_VELOCITY.in(RadiansPerSecond) : 0;
 
+        System.out.println("x: " + translation.getX());
+        System.out.println("y: " + translation.getY());
+        System.out.println("rot: " + rot);
         swerveDrive.drive(translation, rot, fieldOriented, false);
     }
 

@@ -22,7 +22,7 @@ public class RobotContainer {
   private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> driverController.getLeftX(), () -> -driverController.getLeftY(), () -> -driverController.getRightX(), () -> true);
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
-  private final LaunchSubsystem towerSubsystem = new LaunchSubsystem();
+  //private final LaunchSubsystem towerSubsystem = new LaunchSubsystem();
 
   public RobotContainer() {
     configureBindings();
@@ -35,8 +35,8 @@ public class RobotContainer {
   private void configureBindings() {
       operatorController.leftBumper().onTrue(new ToggleIntakeArm(intakeSubsystem));
       operatorController.rightTrigger().whileTrue(new FuelCommand(intakeSubsystem, hopperSubsystem));
-      operatorController.rightBumper().whileTrue(new LaunchCommand(towerSubsystem));
-      operatorController.leftTrigger().whileTrue(new ReverseFuelCommand(intakeSubsystem, hopperSubsystem, towerSubsystem));
+      //operatorController.rightBumper().whileTrue(new LaunchCommand(towerSubsystem));
+      //operatorController.leftTrigger().whileTrue(new ReverseFuelCommand(intakeSubsystem, hopperSubsystem, towerSubsystem));
   }
 
   public Command getAutonomousCommand() {

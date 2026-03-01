@@ -74,8 +74,7 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeRollerMotor.set(0);
     }
 
-    @Override
-    public void periodic() {
-        System.out.println("Encoder Position: " + intakeArmMotor.getAbsoluteEncoder().getPosition());
+    public double getAbsoluteEncoderPosition() {
+        return intakeArmMotor.getAbsoluteEncoder().getPosition();
     }
 }

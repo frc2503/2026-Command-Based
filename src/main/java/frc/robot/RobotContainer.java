@@ -48,4 +48,9 @@ public class RobotContainer {
   public void onTeleopInit() {
     swerveSubsystem.setDefaultCommand(swerveCommand);
   }
+
+  public void periodicStuff() {
+    System.out.println("Absolute Encoder Position: ");
+    System.out.println(intakeSubsystem.getAbsoluteEncoderPosition());
+  }
 }

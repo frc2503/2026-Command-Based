@@ -12,20 +12,15 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class SpitFuelCommand extends Command {
     private final IntakeSubsystem intakeSubsystem;
     private final HopperSubsystem hopperSubsystem;
-    //private final ShooterSubsystem shooterSubsystem;
+    private final ShooterSubsystem shooterSubsystem;
 
-    // public SpitFuelCommand(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem, ShooterSubsystem shooterSubsystem) {
-    //     this.intakeSubsystem = intakeSubsystem;
-    //     this.hopperSubsystem = hopperSubsystem;
-    //     this.shooterSubsystem = shooterSubsystem;
-    //     addRequirements(intakeSubsystem, hopperSubsystem, shooterSubsystem);
-    // }
-
-    public SpitFuelCommand(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem) {
+    public SpitFuelCommand(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem, ShooterSubsystem shooterSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
         this.hopperSubsystem = hopperSubsystem;
-        addRequirements(intakeSubsystem, hopperSubsystem);
+        this.shooterSubsystem = shooterSubsystem;
+        addRequirements(intakeSubsystem, hopperSubsystem, shooterSubsystem);
     }
+
 
     @Override
     public void initialize() {
@@ -42,14 +37,14 @@ public class SpitFuelCommand extends Command {
             intakeSubsystem.stop();
         }
         hopperSubsystem.setHopper(-HOPPER_POWER);
-        //shooterSubsystem.setShooterFeeder(-SHOOTER_FEEDER_POWER);
+        shooterSubsystem.setShooterFeeder(-SHOOTER_FEEDER_POWER);
     }
 
     @Override
     public void end(boolean interrupted) {
         intakeSubsystem.stop();
         hopperSubsystem.stop();
-        //shooterSubsystem.stop();
+        shooterSubsystem.stop();
     }
 
     @Override

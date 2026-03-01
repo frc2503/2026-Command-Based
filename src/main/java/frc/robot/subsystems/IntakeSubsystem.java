@@ -33,6 +33,7 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeArmConfig.closedLoop.pid(INTAKE_ARM_KP, INTAKE_ARM_KI, INTAKE_ARM_KD);
         intakeArmConfig.closedLoop.allowedClosedLoopError(INTAKE_ARM_ALLOWED_ERROR.in(Rotation), ClosedLoopSlot.kSlot0);
         intakeArmConfig.encoder.positionConversionFactor(1/INTAKE_ARM_GEAR_RATIO);
+        intakeArmConfig.absoluteEncoder.setSparkMaxDataPortConfig();
         intakeArmMotor.configure(intakeArmConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         intakeArmController = intakeArmMotor.getClosedLoopController();
 

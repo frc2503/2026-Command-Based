@@ -22,7 +22,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private final SparkClosedLoopController intakeArmController;
     private final SparkMax intakeRollerMotor;
 
-    private boolean isIntakeUp = false;
+    private boolean isIntakeUp = true;
 
     public IntakeSubsystem() {
         intakeArmMotor = new SparkMax(INTAKE_ARM_ID, MotorType.kBrushless);
@@ -66,6 +66,6 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void stop() {
-        intakeArmMotor.set(0);
+        intakeRollerMotor.set(0);
     }
 }

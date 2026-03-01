@@ -16,7 +16,7 @@ public class IntakeFuelCommand extends Command {
     @Override
     public void initialize() {
         if (intakeSubsystem.isIntakeIntendedUp()) {
-            intakeSubsystem.setIntakeAngle(INTAKE_ARM_DOWN_ANGLE);
+            intakeSubsystem.toggleIntake();
         }
     }
 

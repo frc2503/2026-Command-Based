@@ -2,22 +2,22 @@ package frc.robot.commands;
 
 //Add turret later. Will spin up turret and feed fuel from the hopper with a button
 
-import static frc.robot.Constants.FuelConstants.*;
+import static frc.robot.Constants.ShooterConstants.*;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.LaunchSubsystem;
+import frc.robot.subsystems.ShooterSubsystem;
 
 public class LaunchCommand extends Command {
-    private final LaunchSubsystem launchSubsystem;
+    private final ShooterSubsystem launchSubsystem;
 
-    public LaunchCommand(LaunchSubsystem launchSubsystem) {
+    public LaunchCommand(ShooterSubsystem launchSubsystem) {
         this.launchSubsystem = launchSubsystem;
         addRequirements(launchSubsystem);
     }
 
     @Override
     public void initialize() {
-        launchSubsystem.setLaunch1(LAUNCH_1_VOLTAGE);
-        launchSubsystem.setLaunch2(LAUNCH_2_VOLTAGE);
+        launchSubsystem.setShooterFlywheel(SHOOTER_FLYWHEEL_POWER);
+        launchSubsystem.setShooterFeeder(SHOOTER_FEEDER_POWER);
     }
 
     @Override

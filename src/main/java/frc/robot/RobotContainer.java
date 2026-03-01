@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import static frc.robot.Constants.OperatorConstants.*;
-import static frc.robot.Constants.FuelConstants.*;
 
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
@@ -14,29 +13,33 @@ public class RobotContainer {
   private final CommandXboxController driverController = new CommandXboxController(DRIVER_CONTROLLER_PORT);
 
   // The operator's controller
-  // private final CommandXboxController operatorController = new CommandXboxController(OPERATOR_CONTROLLER_PORT);
+  private final CommandXboxController operatorController = new CommandXboxController(OPERATOR_CONTROLLER_PORT);
 
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
 
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(visionSubsystem);
   private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> driverController.getLeftX(), () -> -driverController.getLeftY(), () -> -driverController.getRightX(), () -> true);
-  // private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final IntakeFuelCommand intakeFuel = new IntakeFuelCommand(intakeSubsystem);
+  private final ToggleIntakeArm toggleIntake = new ToggleIntakeArm(intakeSubsystem);
+
   private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
-  //private final LaunchSubsystem towerSubsystem = new LaunchSubsystem();
+  private final RunHopperCommand runHopper = new RunHopperCommand(hopperSubsystem);
+
+  //private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  //private final SpitFuelCommand spitFuel = new SpitFuelCommand(intakeSubsystem, hopperSubsystem, shooterSubsystem);
 
   public RobotContainer() {
     configureBindings();
 
-    // Default command for hopper to keep it running at a low speed to prevent binding
-    hopperSubsystem.setDefaultCommand(
-      Commands.run(() -> hopperSubsystem.setHopper(HOPPER_VOLTAGE * 0.1), hopperSubsystem)
-    );
+    // hopperSubsystem.setDefaultCommand(runHopper);
   }
   private void configureBindings() {
-      // operatorController.leftBumper().onTrue(new ToggleIntakeArm(intakeSubsystem));
-      // operatorController.rightTrigger().whileTrue(new FuelCommand(intakeSubsystem, hopperSubsystem));
-      //operatorController.rightBumper().whileTrue(new LaunchCommand(towerSubsystem));
-      //operatorController.leftTrigger().whileTrue(new ReverseFuelCommand(intakeSubsystem, hopperSubsystem, towerSubsystem));
+    driverController.a().whileTrue(intakeFuel);
+    driverController.x().onTrue(toggleIntake);
+
+    //driverController.leftTrigger().whileTrue(spitFuel);
   }
 
   public Command getAutonomousCommand() {

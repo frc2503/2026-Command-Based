@@ -1,15 +1,20 @@
 package frc.robot.subsystems;
 
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.ResetMode;
 import com.revrobotics.PersistMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import static edu.wpi.first.units.Units.Rotation;
+import static frc.robot.Constants.IntakeConstants.*;
 
-import static frc.robot.Constants.FuelConstants.*;
+import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.revrobotics.spark.SparkMax;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -23,47 +28,41 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeArmMotor = new SparkMax(INTAKE_ARM_ID, MotorType.kBrushless);
 
         SparkMaxConfig intakeArmConfig = new SparkMaxConfig();
+        intakeArmConfig.idleMode(IdleMode.kBrake);
         intakeArmConfig.smartCurrentLimit(INTAKE_ARM_CURRENT_LIMIT);
         intakeArmConfig.closedLoop.pid(INTAKE_ARM_KP, INTAKE_ARM_KI, INTAKE_ARM_KD);
-        intakeArmConfig.encoder.positionConversionFactor((360/INTAKE_ARM_GEAR_RATIO));
+        intakeArmConfig.closedLoop.allowedClosedLoopError(INTAKE_ARM_ALLOWED_ERROR.in(Rotation), ClosedLoopSlot.kSlot0);
+        intakeArmConfig.encoder.positionConversionFactor(1/INTAKE_ARM_GEAR_RATIO);
         intakeArmMotor.configure(intakeArmConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         intakeArmController = intakeArmMotor.getClosedLoopController();
 
         intakeRollerMotor = new SparkMax(INTAKE_ROLLER_ID, MotorType.kBrushless);
 
         SparkMaxConfig intakeRollerConfig = new SparkMaxConfig();
+        intakeRollerConfig.idleMode(IdleMode.kCoast);
         intakeRollerConfig.smartCurrentLimit(INTAKE_ROLLER_CURRENT_LIMIT);
         intakeRollerMotor.configure(intakeRollerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }
 
-    public void setIntake(double voltage) {
-        intakeRollerMotor.set(voltage);
+    public void setIntake(double power) {
+        intakeRollerMotor.set(-power);
     }
 
-    public void setIntakePosition(double degrees) {
-        intakeArmController.setSetpoint(degrees, SparkBase.ControlType.kPosition);
-    }
-
-    @Override
-    public void periodic() {
-        double currentPosition = intakeArmMotor.getEncoder().getPosition();
-        if (Math.abs(currentPosition - INTAKE_ARM_UP_DEGREES) < 5) { // 5 degrees tolerance
-            isIntakeUp = true;
-        } else {
-            isIntakeUp = false;
-        }
+    public void setIntakeAngle(Angle angle) {
+        intakeArmController.setSetpoint(-angle.in(Rotation), SparkBase.ControlType.kPosition);
     }
 
     public void toggleIntake() {
         if (isIntakeUp) {
-            setIntakePosition(INTAKE_ARM_DOWN_DEGREES);
+            setIntakeAngle(INTAKE_ARM_DOWN_ANGLE);
         } else {
-            setIntakePosition(INTAKE_ARM_UP_DEGREES);
+            setIntakeAngle(INTAKE_ARM_UP_ANGLE);
         }
+        isIntakeUp = !isIntakeUp;
     }
 
     public boolean isIntakeUp() {
-        return isIntakeUp;
+        return intakeArmMotor.getEncoder().getPosition() < -INTAKE_ARM_DOWN_ANGLE.in(Rotation)/2;
     }
 
     public void stop() {

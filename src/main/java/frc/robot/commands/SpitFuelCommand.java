@@ -23,14 +23,14 @@ public class SpitFuelCommand extends Command {
 
     @Override
     public void initialize() {
-        if (!intakeSubsystem.isIntakeUp()) {
-            intakeSubsystem.setIntakeAngle(INTAKE_ARM_DOWN_ANGLE);
+        if (intakeSubsystem.isIntakeIntendedUp()) {
+            intakeSubsystem.toggleIntake();
         }
     }
 
     @Override
     public void execute() {
-        if (intakeSubsystem.isIntakeUp()) {
+        if (!intakeSubsystem.isIntakeActuallyUp()) {
             intakeSubsystem.setIntake(-INTAKE_ROLLER_POWER);
         } else {
             intakeSubsystem.stop();

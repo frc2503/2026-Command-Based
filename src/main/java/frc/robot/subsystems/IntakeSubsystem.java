@@ -61,8 +61,12 @@ public class IntakeSubsystem extends SubsystemBase {
         isIntakeUp = !isIntakeUp;
     }
 
-    public boolean isIntakeUp() {
+    public boolean isIntakeIntendedUp() {
         return isIntakeUp;
+    }
+
+    public boolean isIntakeActuallyUp() {
+        return intakeArmMotor.getEncoder().getPosition() > -INTAKE_ARM_DOWN_ANGLE.in(Rotation)/2;
     }
 
     public void stop() {

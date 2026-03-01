@@ -15,14 +15,14 @@ public class IntakeFuelCommand extends Command {
 
     @Override
     public void initialize() {
-        if (!intakeSubsystem.isIntakeUp()) {
+        if (intakeSubsystem.isIntakeIntendedUp()) {
             intakeSubsystem.setIntakeAngle(INTAKE_ARM_DOWN_ANGLE);
         }
     }
 
     @Override
     public void execute() {
-        if (intakeSubsystem.isIntakeUp()) {
+        if (!intakeSubsystem.isIntakeActuallyUp()) {
             intakeSubsystem.setIntake(INTAKE_ROLLER_POWER);
         } else {
             intakeSubsystem.stop();

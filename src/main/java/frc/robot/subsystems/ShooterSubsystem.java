@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.ResetMode;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.PersistMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -8,20 +11,21 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import static frc.robot.Constants.ShooterConstants.*;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+
 import com.revrobotics.spark.SparkMax;
 
 public class ShooterSubsystem extends SubsystemBase {
-    private final SparkMax shooterFlywheelMotor;
+    private final TalonFX shooterFlywheelMotor;
     private final SparkMax shooterFeederMotor;
 
     public ShooterSubsystem() {
-        shooterFlywheelMotor = new SparkMax(SHOOTER_FLYWHEEL_CAN_ID, MotorType.kBrushless);
+        shooterFlywheelMotor = new TalonFX(SHOOTER_FLYWHEEL_CAN_ID);
         shooterFeederMotor = new SparkMax(SHOOTER_FEEDER_CAN_ID, MotorType.kBrushless);
 
-        SparkMaxConfig shooterFlywheelConfig = new SparkMaxConfig();
-        shooterFlywheelConfig.idleMode(IdleMode.kCoast);
-        shooterFlywheelConfig.smartCurrentLimit(SHOOTER_FLYWHEEL_CURRENT_LIMIT);
-        shooterFlywheelMotor.configure(shooterFlywheelConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        TalonFXConfiguration shooterFlywheelConfig = new TalonFXConfiguration();
+        shooterFlywheelConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        shooterFlywheelConfig.CurrentLimits.StatorCurrentLimit = SHOOTER_FLYWHEEL_CURRENT_LIMIT;
+        shooterFlywheelMotor.getConfigurator().apply(shooterFlywheelConfig);
 
         SparkMaxConfig shooterFeederConfig = new SparkMaxConfig();
         shooterFeederConfig.idleMode(IdleMode.kBrake);
@@ -30,12 +34,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setShooterFlywheel(double power) {
-        shooterFlywheelMotor.setVoltage(power);
+        shooterFlywheelMotor.set(power);
     }
     public void setShooterFeeder(double power) {
-        shooterFeederMotor.setVoltage(power);
+        shooterFeederMotor.set(power);
     }
-    
 
     public void stop() {
         shooterFlywheelMotor.set(0);

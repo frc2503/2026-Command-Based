@@ -27,8 +27,10 @@ public class RobotContainer {
   private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
   private final RunHopperCommand runHopper = new RunHopperCommand(hopperSubsystem);
 
-  //private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  //private final SpitFuelCommand spitFuel = new SpitFuelCommand(intakeSubsystem, hopperSubsystem, shooterSubsystem);
+  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final LaunchCommand launch = new LaunchCommand(shooterSubsystem);
+
+  private final SpitFuelCommand spitFuel = new SpitFuelCommand(intakeSubsystem, hopperSubsystem, shooterSubsystem);
 
   public RobotContainer() {
     configureBindings();
@@ -38,7 +40,8 @@ public class RobotContainer {
     driverController.x().onTrue(toggleIntake);
     driverController.y().toggleOnTrue(runHopper);
 
-    //driverController.leftTrigger().whileTrue(spitFuel);
+    driverController.rightBumper().whileTrue(launch);
+    driverController.leftTrigger().whileTrue(spitFuel);
   }
 
   public Command getAutonomousCommand() {

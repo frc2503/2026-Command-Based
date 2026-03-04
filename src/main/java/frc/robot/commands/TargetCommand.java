@@ -43,8 +43,8 @@ public class TargetCommand extends Command {
             }
             //hubPosition = hubPosition.minus(swerveSubsystem.getFieldVelocity().times(Constants.FUEL_FLIGHT_TIME.in(Second)));
 
+            System.out.println(hubPosition.minus(swerveSubsystem.getPose().getTranslation()).getAngle());
             if (swerveSubsystem.setTarget(hubPosition.minus(swerveSubsystem.getPose().getTranslation()).getAngle()) && shooterSubsystem.getVelocity().isNear(SHOOTER_FLYWHEEL_SPEED, SHOOTER_FLYWHEEL_SPEED_TOLERANCE)) {
-                System.out.println(hubPosition.minus(swerveSubsystem.getPose().getTranslation()).getAngle());
                 feederSubsystem.setShooterFeeder(SHOOTER_FEEDER_POWER);
                 hopperSubsystem.setHopper(HOPPER_POWER);
             }

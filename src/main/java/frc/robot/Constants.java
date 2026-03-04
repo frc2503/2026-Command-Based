@@ -24,7 +24,7 @@ public final class Constants {
   public static final Distance FIELD_WIDTH = Units.Inch.of(317.69);
   public static final Distance ALLIANCE_ZONE_WIDTH = Units.Inch.of(182.11);
 
-  public static final double SWERVE_ANGLE_KP = .1;
+  public static final double SWERVE_ANGLE_KP = 1;
   public static final double SWERVE_ANGLE_KI = 0;
   public static final double SWERVE_ANGLE_KD = 0;
   public static final Angle SWERVE_ANGLE_TOLERANCE = Units.Degree.of(1);

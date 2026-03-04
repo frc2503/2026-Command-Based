@@ -41,9 +41,8 @@ public class TargetCommand extends Command {
             } else {
                 hubPosition = new Translation2d(Constants.ALLIANCE_ZONE_WIDTH.in(Meter), Constants.FIELD_WIDTH.in(Meter) / 2);
             }
-            //hubPosition = hubPosition.minus(swerveSubsystem.getFieldVelocity().times(Constants.FUEL_FLIGHT_TIME.in(Second)));
+            hubPosition = hubPosition.minus(swerveSubsystem.getFieldVelocity().times(Constants.FUEL_FLIGHT_TIME.in(Second)));
 
-            System.out.println(hubPosition.minus(swerveSubsystem.getPose().getTranslation()).getAngle());
             if (swerveSubsystem.setTarget(hubPosition.minus(swerveSubsystem.getPose().getTranslation()).getAngle()) && shooterSubsystem.getVelocity().isNear(SHOOTER_FLYWHEEL_SPEED, SHOOTER_FLYWHEEL_SPEED_TOLERANCE)) {
                 feederSubsystem.setShooterFeeder(SHOOTER_FEEDER_POWER);
                 hopperSubsystem.setHopper(HOPPER_POWER);

@@ -39,6 +39,7 @@ public class RobotContainer {
   public RobotContainer() {
     configureBindings();
   }
+  
   private void configureBindings() {
     driverController.a().whileTrue(intakeFuel);
     driverController.x().onTrue(toggleIntake);

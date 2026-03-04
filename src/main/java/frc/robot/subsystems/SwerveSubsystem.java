@@ -61,7 +61,7 @@ public class SwerveSubsystem extends SubsystemBase {
         if (target.isEmpty()) {
             swerveDrive.drive(translation, rot, fieldOriented, false);
         } else {
-            swerveDrive.drive(translation, anglePidController.calculate(getPose().getRotation().getDegrees(), target.get().getDegrees()), fieldOriented, false);
+            swerveDrive.drive(translation, -anglePidController.calculate(getPose().getRotation().getDegrees(), target.get().getDegrees()), fieldOriented, false);
         }
     }
 

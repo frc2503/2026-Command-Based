@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import static edu.wpi.first.units.Units.Meter;
-import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.Second;
 import static frc.robot.Constants.ShooterConstants.*;
 import static frc.robot.Constants.HopperConstants.*;

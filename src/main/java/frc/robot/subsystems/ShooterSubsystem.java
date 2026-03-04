@@ -34,7 +34,7 @@ public class ShooterSubsystem extends SubsystemBase {
         pidConfig.kI = 0; // no output for integrated error
         pidConfig.kD = 0; // no output for error derivative
 
-        shooterFlywheelMotor.getConfigurator().apply(slot0Configs);
+        shooterFlywheelMotor.getConfigurator().apply(pidConfig);
     }
 
     public void setShooterFlywheel(double power) {

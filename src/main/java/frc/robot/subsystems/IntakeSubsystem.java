@@ -50,6 +50,8 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeRollerConfig.idleMode(IdleMode.kCoast);
         intakeRollerConfig.smartCurrentLimit(INTAKE_ROLLER_CURRENT_LIMIT);
         intakeRollerMotor.configure(intakeRollerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+        setIntakePosition(isIntakeUp);
     }
 
     public void setIntake(double power) {

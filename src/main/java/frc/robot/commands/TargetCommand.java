@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import static edu.wpi.first.units.Units.Meter;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 import static edu.wpi.first.units.Units.Second;
 import static frc.robot.Constants.ShooterConstants.*;
 import static frc.robot.Constants.HopperConstants.*;
@@ -33,7 +34,7 @@ public class TargetCommand extends Command {
     @Override
     public void execute() {
         // if (shooterSubsystem.isHubActive() && swerveSubsystem.isInAllianceZone()) {
-            shooterSubsystem.setShooterFlywheel(SHOOTER_FLYWHEEL_POWER);
+            shooterSubsystem.setShooterFlywheel(SHOOTER_FLYWHEEL_SPEED);
 
             Translation2d hubPosition;
             if (DriverStation.getAlliance().get() == Alliance.Red) {
@@ -43,7 +44,7 @@ public class TargetCommand extends Command {
             }
             hubPosition = hubPosition.minus(swerveSubsystem.getFieldVelocity().times(Constants.FUEL_FLIGHT_TIME.in(Second)));
 
-            if (swerveSubsystem.setTarget(hubPosition.minus(swerveSubsystem.getPose().getTranslation()).getAngle().unaryMinus())) {
+            if (swerveSubsystem.setTarget(hubPosition.minus(swerveSubsystem.getPose().getTranslation()).getAngle().unaryMinus()) && shooterSubsystem.getVelocity().isNear(SHOOTER_FLYWHEEL_SPEED, SHOOTER_FLYWHEEL_SPEED_TOLERANCE)) {
                 feederSubsystem.setShooterFeeder(SHOOTER_FEEDER_POWER);
                 hopperSubsystem.setHopper(HOPPER_POWER);
             }

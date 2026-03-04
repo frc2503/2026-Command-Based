@@ -16,7 +16,7 @@ public class LaunchCommand extends Command {
 
     @Override
     public void initialize() {
-        launchSubsystem.setShooterFlywheel(SHOOTER_FLYWHEEL_POWER);
+        launchSubsystem.setShooterFlywheel(SHOOTER_FLYWHEEL_SPEED);
     }
 
     @Override

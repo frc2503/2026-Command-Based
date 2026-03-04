@@ -58,8 +58,15 @@ public final class Constants {
 
   public final class ShooterConstants {
     public static final int SHOOTER_FLYWHEEL_CAN_ID = 4;
-    public static final double SHOOTER_FLYWHEEL_POWER = .50;
+    public static final AngularVelocity SHOOTER_FLYWHEEL_SPEED = Units.RotationsPerSecond.of(75);
+    public static final AngularVelocity SHOOTER_FLYWHEEL_SPEED_TOLERANCE = Units.RotationsPerSecond.of(5);
+    public static final double SHOOTER_FLYWHEEL_KS = 0.1;
+    public static final double SHOOTER_FLYWHEEL_KV = 0.12;
+    public static final double SHOOTER_FLYWHEEL_KP = 0.11;
+    public static final double SHOOTER_FLYWHEEL_KI = 0;
+    public static final double SHOOTER_FLYWHEEL_KD = 0;
     public static final int SHOOTER_FLYWHEEL_CURRENT_LIMIT = 60;
+
     
     public static final int SHOOTER_FEEDER_CAN_ID = 3;
     public static final double SHOOTER_FEEDER_POWER = .3;

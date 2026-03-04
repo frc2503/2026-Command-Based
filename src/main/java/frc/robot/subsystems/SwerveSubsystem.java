@@ -43,7 +43,6 @@ public class SwerveSubsystem extends SubsystemBase {
         }
 
         swerveDrive.setCosineCompensator(RobotBase.isReal());
-        swerveDrive.setGyro(swerveDrive.getGyro().getRotation3d().minus(new Rotation3d(0, 0, Math.PI/2)));
         swerveDrive.resetOdometry(new Pose2d(new Translation2d(5, 5), new Rotation2d()));
 
         anglePidController = new ProfiledPIDController(Constants.SWERVE_ANGLE_KP, Constants.SWERVE_ANGLE_KI, Constants.SWERVE_ANGLE_KD, new TrapezoidProfile.Constraints(Constants.MAXIMUM_ANGULAR_VELOCITY.in(DegreesPerSecond), 10));
@@ -54,7 +53,7 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void drive(double x, double y, double rot, boolean fieldOriented) {
-        Translation2d translation = new Translation2d(x, y);
+        Translation2d translation = new Translation2d(y, x);
         
         //Apply deadzones
         translation = translation.getNorm() > 0.075 ? translation.times(Constants.MAXIMUM_VELOCITY.in(MetersPerSecond)) : Translation2d.kZero;

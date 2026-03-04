@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -26,6 +27,14 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterFlywheelConfig.CurrentLimits.StatorCurrentLimit = SHOOTER_FLYWHEEL_CURRENT_LIMIT;
         shooterFlywheelMotor.getConfigurator().apply(shooterFlywheelConfig);
 
+        Slot0Configs pidConfig = new Slot0Configs();
+        pidConfig.kS = 0.1; // Add 0.1 V output to overcome static friction
+        pidConfig.kV = 0.12; // A velocity target of 1 rps results in 0.12 V output
+        pidConfig.kP = 0.11; // An error of 1 rps results in 0.11 V output
+        pidConfig.kI = 0; // no output for integrated error
+        pidConfig.kD = 0; // no output for error derivative
+
+        shooterFlywheelMotor.getConfigurator().apply(slot0Configs);
     }
 
     public void setShooterFlywheel(double power) {

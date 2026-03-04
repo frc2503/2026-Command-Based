@@ -1,7 +1,8 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.ClosedLoopSlot;
-//import com.revrobotics.spark.SparkAbsoluteEncoder;
+import com.revrobotics.spark.FeedbackSensor;
+import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.ResetMode;
 import com.revrobotics.PersistMode;
@@ -21,26 +22,27 @@ import com.revrobotics.spark.SparkMax;
 public class IntakeSubsystem extends SubsystemBase {
     private final SparkMax intakeArmMotor;
     private final SparkClosedLoopController intakeArmController;
-    //private final SparkAbsoluteEncoder intakeArmAbsoluteEncoder;
+    private final SparkAbsoluteEncoder intakeArmAbsoluteEncoder;
     private final SparkMax intakeRollerMotor;
 
     private boolean isIntakeUp = true;
 
     public IntakeSubsystem() {
         intakeArmMotor = new SparkMax(INTAKE_ARM_ID, MotorType.kBrushless);
+        intakeArmController = intakeArmMotor.getClosedLoopController();
+        intakeArmAbsoluteEncoder = intakeArmMotor.getAbsoluteEncoder();
 
         SparkMaxConfig intakeArmConfig = new SparkMaxConfig();
         intakeArmConfig.idleMode(IdleMode.kBrake);
         intakeArmConfig.smartCurrentLimit(INTAKE_ARM_CURRENT_LIMIT);
         intakeArmConfig.closedLoop.pid(INTAKE_ARM_KP, INTAKE_ARM_KI, INTAKE_ARM_KD);
         intakeArmConfig.closedLoop.allowedClosedLoopError(INTAKE_ARM_ALLOWED_ERROR.in(Rotation), ClosedLoopSlot.kSlot0);
-        intakeArmConfig.encoder.positionConversionFactor(1/INTAKE_ARM_GEAR_RATIO);
+        intakeArmConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
         intakeArmConfig.absoluteEncoder.setSparkMaxDataPortConfig();
-        intakeArmConfig.absoluteEncoder.startPulseUs(3.884);
-        intakeArmConfig.absoluteEncoder.endPulseUs(998.06);
+        intakeArmConfig.absoluteEncoder.zeroOffset(INTAKE_ARM_ENCODER_OFFSET);
+        // intakeArmConfig.absoluteEncoder.startPulseUs(3.884);
+        // intakeArmConfig.absoluteEncoder.endPulseUs(998.06);
         intakeArmMotor.configure(intakeArmConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        intakeArmController = intakeArmMotor.getClosedLoopController();
-        //intakeArmAbsoluteEncoder = intakeArmMotor.getAbsoluteEncoder();
 
         intakeRollerMotor = new SparkMax(INTAKE_ROLLER_ID, MotorType.kBrushless);
 
@@ -55,16 +57,20 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void setIntakeAngle(Angle angle) {
-        intakeArmController.setSetpoint(-angle.in(Rotation), SparkBase.ControlType.kPosition);
+        intakeArmController.setSetpoint(angle.in(Rotation), SparkBase.ControlType.kPosition);
+    }
+
+    public void setIntakePosition(boolean up) {
+        if (up) {
+            setIntakeAngle(INTAKE_ARM_UP_ANGLE);
+        } else {
+            setIntakeAngle(INTAKE_ARM_DOWN_ANGLE);
+        }
+        isIntakeUp = up;
     }
 
     public void toggleIntake() {
-        if (isIntakeUp) {
-            setIntakeAngle(INTAKE_ARM_DOWN_ANGLE);
-        } else {
-            setIntakeAngle(INTAKE_ARM_UP_ANGLE);
-        }
-        isIntakeUp = !isIntakeUp;
+        setIntakePosition(!isIntakeUp);
     }
 
     public boolean isIntakeIntendedUp() {
@@ -72,14 +78,14 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public boolean isIntakeActuallyUp() {
-        return intakeArmMotor.getEncoder().getPosition() > -INTAKE_ARM_DOWN_ANGLE.in(Rotation)/2;
+        return intakeArmMotor.getEncoder().getPosition() > INTAKE_ARM_DOWN_ANGLE.in(Rotation)/2;
     }
 
     public void stop() {
         intakeRollerMotor.set(0);
     }
 
-    //public double getAbsoluteEncoderPosition() {
-        //return intakeArmAbsoluteEncoder.getPosition();
-    //}
+    public double getAbsoluteEncoderPosition() {
+        return intakeArmAbsoluteEncoder.getPosition();
+    }
 }

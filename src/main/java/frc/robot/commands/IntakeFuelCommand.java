@@ -21,9 +21,7 @@ public class IntakeFuelCommand extends Command {
 
     @Override
     public void initialize() {
-        if (intakeSubsystem.isIntakeIntendedUp()) {
-            intakeSubsystem.toggleIntake();
-        }
+        intakeSubsystem.setIntakePosition(false);
     }
 
     @Override

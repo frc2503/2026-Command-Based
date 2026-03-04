@@ -15,10 +15,13 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers.PoseEstimate;
@@ -30,8 +33,10 @@ import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 public class SwerveSubsystem extends SubsystemBase {
     private SwerveDrive swerveDrive;
     private VisionSubsystem visionSubsystem;
-    Optional<Rotation2d> target = Optional.empty();
-    ProfiledPIDController anglePidController;
+    private Optional<Rotation2d> target = Optional.empty();
+    private ProfiledPIDController anglePidController;
+
+    private StructPublisher<Pose2d> posePublisher;
 
     public SwerveSubsystem(VisionSubsystem visionSubsystem) {
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
@@ -49,6 +54,8 @@ public class SwerveSubsystem extends SubsystemBase {
         anglePidController.enableContinuousInput(0, 360);
 
         this.visionSubsystem = visionSubsystem;
+
+        posePublisher = Constants.NETWORK_TABLE.getStructTopic("RobotPose", Pose2d.struct).publish();
     }
 
     public void drive(double x, double y, double rot, boolean fieldOriented) {
@@ -101,5 +108,7 @@ public class SwerveSubsystem extends SubsystemBase {
         if (estimate.isPresent()) {
             swerveDrive.addVisionMeasurement(estimate.get().pose, estimate.get().timestampSeconds);
         }
+
+        posePublisher.set(getPose());
     }
 }

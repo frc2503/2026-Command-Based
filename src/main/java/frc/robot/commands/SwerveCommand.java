@@ -25,7 +25,7 @@ public class SwerveCommand extends Command {
 
     @Override
     public void execute() {
-        swerveSubsystem.drive(x.getAsDouble(), y.getAsDouble(), rot.getAsDouble(), fieldOriented.getAsBoolean());
+        swerveSubsystem.drive(-y.getAsDouble(), x.getAsDouble(), -rot.getAsDouble(), fieldOriented.getAsBoolean());
     }
 
     @Override

@@ -1,7 +1,7 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.spark.ClosedLoopSlot;
-import com.revrobotics.spark.SparkAbsoluteEncoder;
+//import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.ResetMode;
 import com.revrobotics.PersistMode;
@@ -21,7 +21,7 @@ import com.revrobotics.spark.SparkMax;
 public class IntakeSubsystem extends SubsystemBase {
     private final SparkMax intakeArmMotor;
     private final SparkClosedLoopController intakeArmController;
-    private final SparkAbsoluteEncoder intakeArmAbsoluteEncoder;
+    //private final SparkAbsoluteEncoder intakeArmAbsoluteEncoder;
     private final SparkMax intakeRollerMotor;
 
     private boolean isIntakeUp = true;
@@ -40,7 +40,7 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeArmConfig.absoluteEncoder.endPulseUs(998.06);
         intakeArmMotor.configure(intakeArmConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
         intakeArmController = intakeArmMotor.getClosedLoopController();
-        intakeArmAbsoluteEncoder = intakeArmMotor.getAbsoluteEncoder();
+        //intakeArmAbsoluteEncoder = intakeArmMotor.getAbsoluteEncoder();
 
         intakeRollerMotor = new SparkMax(INTAKE_ROLLER_ID, MotorType.kBrushless);
 
@@ -79,7 +79,7 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeRollerMotor.set(0);
     }
 
-    public double getAbsoluteEncoderPosition() {
-        return intakeArmAbsoluteEncoder.getPosition();
-    }
+    //public double getAbsoluteEncoderPosition() {
+        //return intakeArmAbsoluteEncoder.getPosition();
+    //}
 }

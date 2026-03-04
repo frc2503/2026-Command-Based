@@ -7,18 +7,19 @@ import static frc.robot.Constants.ShooterConstants.*;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.FeederSubsystem;
+
 
 public class SpitFuelCommand extends Command {
     private final IntakeSubsystem intakeSubsystem;
     private final HopperSubsystem hopperSubsystem;
-    private final ShooterSubsystem shooterSubsystem;
+    private final FeederSubsystem feederSubsystem;
 
-    public SpitFuelCommand(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem, ShooterSubsystem shooterSubsystem) {
+    public SpitFuelCommand(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem, FeederSubsystem feederSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
         this.hopperSubsystem = hopperSubsystem;
-        this.shooterSubsystem = shooterSubsystem;
-        addRequirements(intakeSubsystem, hopperSubsystem, shooterSubsystem);
+        this.feederSubsystem = feederSubsystem;
+        addRequirements(intakeSubsystem, hopperSubsystem, feederSubsystem);
     }
 
 
@@ -37,14 +38,14 @@ public class SpitFuelCommand extends Command {
             intakeSubsystem.stop();
         }
         hopperSubsystem.setHopper(-HOPPER_POWER);
-        shooterSubsystem.setShooterFeeder(-SHOOTER_FEEDER_POWER);
+        feederSubsystem.setShooterFeeder(-SHOOTER_FEEDER_POWER);
     }
 
     @Override
     public void end(boolean interrupted) {
         intakeSubsystem.stop();
         hopperSubsystem.stop();
-        shooterSubsystem.stop();
+        feederSubsystem.stop();
     }
 
     @Override

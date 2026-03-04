@@ -29,8 +29,11 @@ public class RobotContainer {
 
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final LaunchCommand launch = new LaunchCommand(shooterSubsystem);
+  
+  private final FeederSubsystem feederSubsystem = new FeederSubsystem();
+  private final FeedCommand feed = new FeedCommand(feederSubsystem, hopperSubsystem);
 
-  private final SpitFuelCommand spitFuel = new SpitFuelCommand(intakeSubsystem, hopperSubsystem, shooterSubsystem);
+  private final SpitFuelCommand spitFuel = new SpitFuelCommand(intakeSubsystem, hopperSubsystem, feederSubsystem);
 
   public RobotContainer() {
     configureBindings();
@@ -42,6 +45,7 @@ public class RobotContainer {
 
     driverController.rightBumper().whileTrue(launch);
     driverController.leftTrigger().whileTrue(spitFuel);
+    driverController.rightTrigger().whileTrue(feed);
   }
 
   public Command getAutonomousCommand() {
@@ -53,7 +57,7 @@ public class RobotContainer {
   }
 
   public void periodicStuff() {
-    System.out.println("Absolute Encoder Position: ");
-    System.out.println(intakeSubsystem.getAbsoluteEncoderPosition());
+    //System.out.println("Absolute Encoder Position: ");
+    //System.out.println(intakeSubsystem.getAbsoluteEncoderPosition());
   }
 }

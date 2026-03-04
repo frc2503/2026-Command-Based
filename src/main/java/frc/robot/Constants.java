@@ -52,12 +52,12 @@ public final class Constants {
   }
 
   public final class ShooterConstants {
-    public static final int SHOOTER_FLYWHEEL_CAN_ID = 1;
-    public static final double SHOOTER_FLYWHEEL_POWER = 1;
+    public static final int SHOOTER_FLYWHEEL_CAN_ID = 4;
+    public static final double SHOOTER_FLYWHEEL_POWER = .50;
     public static final int SHOOTER_FLYWHEEL_CURRENT_LIMIT = 60;
     
-    public static final int SHOOTER_FEEDER_CAN_ID = 2;
-    public static final double SHOOTER_FEEDER_POWER = -1;
+    public static final int SHOOTER_FEEDER_CAN_ID = 3;
+    public static final double SHOOTER_FEEDER_POWER = .3;
     public static final int SHOOTER_FEEDER_CURRENT_LIMIT = 60;
   }
 

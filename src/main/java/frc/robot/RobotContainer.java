@@ -18,7 +18,7 @@ public class RobotContainer {
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
 
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(visionSubsystem);
-  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> driverController.getLeftX(), () -> -driverController.getLeftY(), () -> -driverController.getRightX(), () -> true);
+  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> driverController.getLeftX(), () -> -driverController.getLeftY(), () -> driverController.getRightX(), () -> true);
 
   private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
 

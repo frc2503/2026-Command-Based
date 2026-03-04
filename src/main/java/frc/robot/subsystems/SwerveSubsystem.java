@@ -14,14 +14,13 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers.PoseEstimate;
@@ -65,10 +64,14 @@ public class SwerveSubsystem extends SubsystemBase {
         translation = translation.getNorm() > 0.075 ? translation.times(Constants.MAXIMUM_VELOCITY.in(MetersPerSecond)) : Translation2d.kZero;
         rot = Math.abs(rot) > 0.075 ? rot * Constants.MAXIMUM_ANGULAR_VELOCITY.in(RadiansPerSecond) : 0;
 
-        if (target.isEmpty()) {
-            swerveDrive.drive(translation, rot, fieldOriented, false);
+        if (target.isPresent()) {
+            rot = anglePidController.calculate(getPose().getRotation().getDegrees(), target.get().getDegrees());
+        }
+
+        if (translation.equals(Translation2d.kZero) && rot == 0 && swerveDrive.getFieldVelocity().equals(new ChassisSpeeds())) {
+            swerveDrive.lockPose();
         } else {
-            swerveDrive.drive(translation, -anglePidController.calculate(getPose().getRotation().getDegrees(), target.get().getDegrees()), fieldOriented, false);
+            swerveDrive.drive(translation, rot, fieldOriented, false);
         }
     }
 

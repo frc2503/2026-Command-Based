@@ -18,35 +18,35 @@ public class RobotContainer {
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
 
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(visionSubsystem);
-  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> driverController.getLeftX(), () -> driverController.getLeftY(), () -> driverController.getRightX(), () -> true);
+  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> -driverController.getLeftX(), () -> -driverController.getLeftY(), () -> -driverController.getRightX(), () -> true);
 
-  private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
+  // private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final IntakeFuelCommand intakeFuel = new IntakeFuelCommand(intakeSubsystem, hopperSubsystem);
-  private final ToggleIntakeArm toggleIntake = new ToggleIntakeArm(intakeSubsystem);
+  // private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  // private final IntakeFuelCommand intakeFuel = new IntakeFuelCommand(intakeSubsystem, hopperSubsystem);
+  // private final ToggleIntakeArm toggleIntake = new ToggleIntakeArm(intakeSubsystem);
 
-  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  private final LaunchCommand launch = new LaunchCommand(shooterSubsystem);
+  // private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  // private final LaunchCommand launch = new LaunchCommand(shooterSubsystem);
   
-  private final FeederSubsystem feederSubsystem = new FeederSubsystem();
-  private final FeedCommand feed = new FeedCommand(feederSubsystem, hopperSubsystem);
+  // private final FeederSubsystem feederSubsystem = new FeederSubsystem();
+  // private final FeedCommand feed = new FeedCommand(feederSubsystem, hopperSubsystem);
 
-  private final TargetCommand target = new TargetCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, swerveSubsystem);
+  // private final TargetCommand target = new TargetCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, swerveSubsystem);
 
-  private final SpitFuelCommand spitFuel = new SpitFuelCommand(intakeSubsystem, hopperSubsystem, feederSubsystem);
+  // private final SpitFuelCommand spitFuel = new SpitFuelCommand(intakeSubsystem, hopperSubsystem, feederSubsystem);
 
   public RobotContainer() {
     configureBindings();
   }
   private void configureBindings() {
-    driverController.a().whileTrue(intakeFuel);
-    driverController.x().onTrue(toggleIntake);
+    // driverController.a().whileTrue(intakeFuel);
+    // driverController.x().onTrue(toggleIntake);
 
-    driverController.rightBumper().whileTrue(launch);
-    driverController.leftBumper().whileTrue(target);
-    driverController.leftTrigger().whileTrue(spitFuel);
-    driverController.rightTrigger().whileTrue(feed);
+    // driverController.rightBumper().whileTrue(launch);
+    // driverController.leftBumper().whileTrue(target);
+    // driverController.leftTrigger().whileTrue(spitFuel);
+    // driverController.rightTrigger().whileTrue(feed);
   }
 
   public Command getAutonomousCommand() {

@@ -34,13 +34,13 @@ public final class Constants {
 
   public final class IntakeConstants {
     public static final int INTAKE_ROLLER_ID = 15;
-    public static final double INTAKE_ROLLER_POWER = 0.3;
+    public static final double INTAKE_ROLLER_POWER = 0.8;
     public static final int INTAKE_ROLLER_CURRENT_LIMIT = 20;
 
     public static final int INTAKE_ARM_ID = 14;
     public static final Angle INTAKE_ARM_UP_ANGLE = Units.Degree.of(0);
     // Should probably be 110, set low for testing
-    public static final Angle INTAKE_ARM_DOWN_ANGLE = Units.Degree.of(50);
+    public static final Angle INTAKE_ARM_DOWN_ANGLE = Units.Degree.of(70);
     public static final double INTAKE_ARM_GEAR_RATIO = 20;
     public static final int INTAKE_ARM_CURRENT_LIMIT = 60;
     public static final Angle INTAKE_ARM_ALLOWED_ERROR = Units.Degrees.of(1);

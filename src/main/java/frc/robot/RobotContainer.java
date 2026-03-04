@@ -18,7 +18,7 @@ public class RobotContainer {
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
 
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(visionSubsystem);
-  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> driverController.getLeftX(), () -> -driverController.getLeftY(), () -> driverController.getRightX(), () -> true);
+  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> driverController.getLeftX(), () -> -driverController.getLeftY(), () -> -driverController.getRightX(), () -> true);
 
   private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
@@ -32,6 +32,8 @@ public class RobotContainer {
   private final FeederSubsystem feederSubsystem = new FeederSubsystem();
   private final FeedCommand feed = new FeedCommand(feederSubsystem, hopperSubsystem);
 
+  private final TargetCommand target = new TargetCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, swerveSubsystem);
+
   private final SpitFuelCommand spitFuel = new SpitFuelCommand(intakeSubsystem, hopperSubsystem, feederSubsystem);
 
   public RobotContainer() {
@@ -42,6 +44,7 @@ public class RobotContainer {
     driverController.x().onTrue(toggleIntake);
 
     driverController.rightBumper().whileTrue(launch);
+    driverController.leftBumper().whileTrue(target);
     driverController.leftTrigger().whileTrue(spitFuel);
     driverController.rightTrigger().whileTrue(feed);
   }
@@ -52,10 +55,5 @@ public class RobotContainer {
 
   public void onTeleopInit() {
     swerveSubsystem.setDefaultCommand(swerveCommand);
-  }
-
-  public void periodicStuff() {
-    //System.out.println("Absolute Encoder Position: ");
-    //System.out.println(intakeSubsystem.getAbsoluteEncoderPosition());
   }
 }

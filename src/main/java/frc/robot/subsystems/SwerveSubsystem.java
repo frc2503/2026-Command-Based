@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import static edu.wpi.first.units.Units.Degree;
+import static edu.wpi.first.units.Units.DegreesPerSecond;
 import static edu.wpi.first.units.Units.Meter;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
@@ -8,9 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -26,6 +31,9 @@ import swervelib.telemetry.SwerveDriveTelemetry.TelemetryVerbosity;
 public class SwerveSubsystem extends SubsystemBase {
     private SwerveDrive swerveDrive;
     private VisionSubsystem visionSubsystem;
+    Optional<Rotation2d> target = Optional.empty();
+    ProfiledPIDController anglePidController;
+
     public SwerveSubsystem(VisionSubsystem visionSubsystem) {
         SwerveDriveTelemetry.verbosity = TelemetryVerbosity.HIGH;
         try {
@@ -35,7 +43,12 @@ public class SwerveSubsystem extends SubsystemBase {
         }
 
         swerveDrive.setCosineCompensator(RobotBase.isReal());
-        swerveDrive.resetOdometry(new Pose2d(new Translation2d(5, 5), new Rotation2d(Math.PI/2)));
+        swerveDrive.setGyroOffset(new Rotation3d(0, 0, Math.PI/2));
+        swerveDrive.resetOdometry(new Pose2d(new Translation2d(5, 5), new Rotation2d()));
+
+        anglePidController = new ProfiledPIDController(Constants.SWERVE_ANGLE_KP, Constants.SWERVE_ANGLE_KI, Constants.SWERVE_ANGLE_KD, new TrapezoidProfile.Constraints(Constants.MAXIMUM_ANGULAR_VELOCITY.in(DegreesPerSecond), 10));
+        anglePidController.setTolerance(Constants.SWERVE_ANGLE_TOLERANCE.in(Degree));
+        anglePidController.enableContinuousInput(0, 360);
 
         this.visionSubsystem = visionSubsystem;
     }
@@ -47,7 +60,11 @@ public class SwerveSubsystem extends SubsystemBase {
         translation = translation.getNorm() > 0.075 ? translation.times(Constants.MAXIMUM_VELOCITY.in(MetersPerSecond)) : Translation2d.kZero;
         rot = Math.abs(rot) > 0.075 ? rot * Constants.MAXIMUM_ANGULAR_VELOCITY.in(RadiansPerSecond) : 0;
 
-        swerveDrive.drive(translation, rot, fieldOriented, false);
+        if (target.isEmpty()) {
+            swerveDrive.drive(translation, rot, fieldOriented, false);
+        } else {
+            swerveDrive.drive(translation, anglePidController.calculate(getPose().getRotation().getDegrees(), target.get().getDegrees()), fieldOriented, false);
+        }
     }
 
     public void stop() {
@@ -68,6 +85,15 @@ public class SwerveSubsystem extends SubsystemBase {
 
     public Translation2d getFieldVelocity() {
         return new Translation2d(swerveDrive.getFieldVelocity().vxMetersPerSecond, swerveDrive.getFieldVelocity().vyMetersPerSecond);
+    }
+
+    public boolean setTarget(Rotation2d rotation2d) {
+        target = Optional.of(rotation2d);
+        return anglePidController.atSetpoint();
+    }
+
+    public void cancelTargeting() {
+        target = Optional.empty();
     }
 
     @Override

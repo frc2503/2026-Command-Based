@@ -24,7 +24,7 @@ public final class Constants {
   public static final Distance FIELD_WIDTH = Units.Inch.of(317.69);
   public static final Distance ALLIANCE_ZONE_WIDTH = Units.Inch.of(182.11);
 
-  public static final double SWERVE_ANGLE_KP = 1;
+  public static final double SWERVE_ANGLE_KP = .1;
   public static final double SWERVE_ANGLE_KI = 0;
   public static final double SWERVE_ANGLE_KD = 0;
   public static final Angle SWERVE_ANGLE_TOLERANCE = Units.Degree.of(1);
@@ -58,7 +58,7 @@ public final class Constants {
 
   public final class ShooterConstants {
     public static final int SHOOTER_FLYWHEEL_CAN_ID = 4;
-    public static final AngularVelocity SHOOTER_FLYWHEEL_SPEED = Units.RotationsPerSecond.of(75);
+    public static final AngularVelocity SHOOTER_FLYWHEEL_SPEED = Units.RotationsPerSecond.of(40);
     public static final AngularVelocity SHOOTER_FLYWHEEL_SPEED_TOLERANCE = Units.RotationsPerSecond.of(5);
     public static final double SHOOTER_FLYWHEEL_KS = 0.1;
     public static final double SHOOTER_FLYWHEEL_KV = 0.12;

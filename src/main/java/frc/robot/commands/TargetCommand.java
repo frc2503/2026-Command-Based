@@ -37,9 +37,9 @@ public class TargetCommand extends Command {
 
             Translation2d hubPosition;
             if (DriverStation.getAlliance().get() == Alliance.Red) {
-                hubPosition = new Translation2d(Constants.FIELD_WIDTH.in(Meter) / 2, Constants.FIELD_LENGTH.in(Meter) - Constants.ALLIANCE_ZONE_WIDTH.in(Meter));
+                hubPosition = new Translation2d(Constants.FIELD_LENGTH.in(Meter) - Constants.ALLIANCE_ZONE_WIDTH.in(Meter), Constants.FIELD_WIDTH.in(Meter) / 2);
             } else {
-                hubPosition = new Translation2d(Constants.FIELD_WIDTH.in(Meter) / 2, Constants.ALLIANCE_ZONE_WIDTH.in(Meter));
+                hubPosition = new Translation2d(Constants.ALLIANCE_ZONE_WIDTH.in(Meter), Constants.FIELD_WIDTH.in(Meter) / 2);
             }
             hubPosition = hubPosition.minus(swerveSubsystem.getFieldVelocity().times(Constants.FUEL_FLIGHT_TIME.in(Second)));
 

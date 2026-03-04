@@ -35,7 +35,7 @@ public class SwerveSubsystem extends SubsystemBase {
         }
 
         swerveDrive.setCosineCompensator(RobotBase.isReal());
-        swerveDrive.resetOdometry(new Pose2d(new Translation2d(5, 5), new Rotation2d()));
+        swerveDrive.resetOdometry(new Pose2d(new Translation2d(5, 5), new Rotation2d(Math.PI/2)));
 
         this.visionSubsystem = visionSubsystem;
     }

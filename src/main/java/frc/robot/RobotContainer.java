@@ -18,14 +18,13 @@ public class RobotContainer {
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
 
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(visionSubsystem);
-  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> driverController.getLeftX(), () -> -driverController.getLeftY(), () -> -driverController.getRightX(), () -> true);
-
-  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final IntakeFuelCommand intakeFuel = new IntakeFuelCommand(intakeSubsystem);
-  private final ToggleIntakeArm toggleIntake = new ToggleIntakeArm(intakeSubsystem);
+  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> driverController.getLeftX(), () -> -driverController.getLeftY(), () -> driverController.getRightX(), () -> true);
 
   private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
-  private final RunHopperCommand runHopper = new RunHopperCommand(hopperSubsystem);
+
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final IntakeFuelCommand intakeFuel = new IntakeFuelCommand(intakeSubsystem, hopperSubsystem);
+  private final ToggleIntakeArm toggleIntake = new ToggleIntakeArm(intakeSubsystem);
 
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final LaunchCommand launch = new LaunchCommand(shooterSubsystem);
@@ -41,7 +40,6 @@ public class RobotContainer {
   private void configureBindings() {
     driverController.a().whileTrue(intakeFuel);
     driverController.x().onTrue(toggleIntake);
-    driverController.y().toggleOnTrue(runHopper);
 
     driverController.rightBumper().whileTrue(launch);
     driverController.leftTrigger().whileTrue(spitFuel);

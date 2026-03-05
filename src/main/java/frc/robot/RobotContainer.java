@@ -38,6 +38,7 @@ public class RobotContainer {
   private final FeederSubsystem feederSubsystem = new FeederSubsystem();
   private final FeedCommand feed = new FeedCommand(feederSubsystem, hopperSubsystem);
 
+  private final SpinUpAndShootCommand spinUpAndShoot = new SpinUpAndShootCommand(shooterSubsystem, feederSubsystem);
   private final TargetCommand targetAndShoot = new TargetCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, swerveSubsystem);
 
   private final SpitFuelCommand spitFuel = new SpitFuelCommand(intakeSubsystem, hopperSubsystem, feederSubsystem);
@@ -65,6 +66,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("intakeFuel", intakeFuel);
     NamedCommands.registerCommand("extendIntake", extendIntake);
     NamedCommands.registerCommand("retractIntake", retractIntake);
+    NamedCommands.registerCommand("spinUpAndShoot", spinUpAndShoot);
     NamedCommands.registerCommand("targetAndShoot", targetAndShoot);
   }
 

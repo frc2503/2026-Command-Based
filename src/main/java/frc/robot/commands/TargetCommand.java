@@ -44,6 +44,9 @@ public class TargetCommand extends Command {
             if (swerveSubsystem.setTarget(hubPosition.minus(swerveSubsystem.getPose().getTranslation()).getAngle()) && shooterSubsystem.getVelocity().isNear(SHOOTER_FLYWHEEL_SPEED, SHOOTER_FLYWHEEL_SPEED_TOLERANCE)) {
                 feederSubsystem.setShooterFeeder(SHOOTER_FEEDER_POWER);
                 hopperSubsystem.setHopper(HOPPER_POWER);
+            } else {
+                feederSubsystem.stop();
+                hopperSubsystem.stop();
             }
         // } else {
         //     shooterSubsystem.stop();

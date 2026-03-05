@@ -18,6 +18,6 @@ public class ExtendIntakeArm extends InstantCommand {
 
   @Override
   public boolean isFinished() {
-      return intakeSubsystem.isIntakeActuallyUp() == false;
+    return intakeSubsystem.isIntakeActuallyUp() == false;
   }
 }

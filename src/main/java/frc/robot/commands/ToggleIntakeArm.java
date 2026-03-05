@@ -13,11 +13,11 @@ public class ToggleIntakeArm extends InstantCommand {
 
   @Override
   public void initialize() {
-      intakeSubsystem.toggleIntake();
+    intakeSubsystem.toggleIntake();
   }
 
   @Override
   public boolean isFinished() {
-      return intakeSubsystem.isIntakeIntendedUp() == intakeSubsystem.isIntakeActuallyUp();
+    return intakeSubsystem.isIntakeIntendedUp() == intakeSubsystem.isIntakeActuallyUp();
   }
 }

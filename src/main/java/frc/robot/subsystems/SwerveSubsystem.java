@@ -10,6 +10,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -23,6 +28,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import static frc.robot.Constants.AutoConstants.*;
 import frc.robot.LimelightHelpers.PoseEstimate;
 import swervelib.SwerveDrive;
 import swervelib.parser.SwerveParser;
@@ -55,6 +61,7 @@ public class SwerveSubsystem extends SubsystemBase {
         this.visionSubsystem = visionSubsystem;
 
         posePublisher = Constants.NETWORK_TABLE.getStructTopic("RobotPose", Pose2d.struct).publish();
+        configureAutoBuilder();
     }
 
     public void drive(double x, double y, double rot, boolean fieldOriented) {
@@ -81,24 +88,44 @@ public class SwerveSubsystem extends SubsystemBase {
         }
     }
 
+    public void drive(ChassisSpeeds chassisSpeeds) {
+        swerveDrive.drive(chassisSpeeds);
+    }
+
     public void stop() {
         swerveDrive.drive(Translation2d.kZero, 0, false, false);
     }
 
     public boolean isInAllianceZone() {
-        if (DriverStation.getAlliance().get() == Alliance.Red) {
-            return swerveDrive.getPose().getMeasureX().in(Meter) >= Constants.FIELD_LENGTH.in(Meter) - Constants.ALLIANCE_ZONE_WIDTH.in(Meter);
-        } else {
+        if (isOnBlueAlliance()) {
             return swerveDrive.getPose().getMeasureX().in(Meter) <= Constants.ALLIANCE_ZONE_WIDTH.in(Meter);
+        } else {
+            return swerveDrive.getPose().getMeasureX().in(Meter) >= Constants.FIELD_LENGTH.in(Meter) - Constants.ALLIANCE_ZONE_WIDTH.in(Meter);
         }
+    }
+
+    public boolean isOnBlueAlliance() {
+        Optional<Alliance> alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            return alliance.get() == DriverStation.Alliance.Blue;
+        }
+        return false;
     }
 
     public Pose2d getPose() {
         return swerveDrive.getPose();
     }
 
+    public void resetPose(Pose2d pose) {
+        swerveDrive.resetOdometry(pose);
+    }
+
     public Translation2d getFieldVelocity() {
         return new Translation2d(swerveDrive.getFieldVelocity().vxMetersPerSecond, swerveDrive.getFieldVelocity().vyMetersPerSecond);
+    }
+
+    public ChassisSpeeds getRobotRelativeSpeeds() {
+        return swerveDrive.getRobotVelocity();
     }
 
     public boolean setTarget(Rotation2d rotation2d) {
@@ -109,6 +136,29 @@ public class SwerveSubsystem extends SubsystemBase {
     public void cancelTargeting() {
         target = Optional.empty();
     }
+
+    private void configureAutoBuilder() {
+        RobotConfig config;
+        try{
+            config = RobotConfig.fromGUISettings();
+
+            AutoBuilder.configure(
+                this::getPose,
+                this::resetPose,
+                this::getRobotRelativeSpeeds,
+                (speeds, feedforwards) -> drive(speeds),
+                new PPHolonomicDriveController(
+                        new PIDConstants(AUTO_TRANSLATION_KP, AUTO_TRANSLATION_KI, AUTO_TRANSLATION_KD), // Translation PID constants
+                        new PIDConstants(AUTO_ROTATION_KP, AUTO_ROTATION_KI, AUTO_ROTATION_KD) // Rotation PID constants
+                ),
+                config,
+                () -> { return !isOnBlueAlliance(); },
+                this
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+  }
 
     @Override
     public void periodic() {

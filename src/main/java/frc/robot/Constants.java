@@ -75,9 +75,18 @@ public final class Constants {
     public static final int SHOOTER_FEEDER_CURRENT_LIMIT = 60;
   }
 
-  public final class OperatorConstants{
+  public final class OperatorConstants {
     public static final int DRIVER_CONTROLLER_PORT = 0;
     public static final int OPERATOR_CONTROLLER_PORT = 1;
   }
 
+  public final class AutoConstants {
+    public static final double AUTO_TRANSLATION_KP = 1;
+    public static final double AUTO_TRANSLATION_KI = 0.0;
+    public static final double AUTO_TRANSLATION_KD = 0.0;
+
+    public static final double AUTO_ROTATION_KP = 1;
+    public static final double AUTO_ROTATION_KI = 0.0;
+    public static final double AUTO_ROTATION_KD = 0.0;
+  }
 }

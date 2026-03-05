@@ -1,9 +1,13 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import static frc.robot.Constants.OperatorConstants.*;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import frc.robot.subsystems.*;
 import frc.robot.commands.*;
@@ -25,6 +29,8 @@ public class RobotContainer {
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
   private final IntakeFuelCommand intakeFuel = new IntakeFuelCommand(intakeSubsystem, hopperSubsystem);
   private final ToggleIntakeArm toggleIntake = new ToggleIntakeArm(intakeSubsystem);
+  private final ExtendIntakeArm extendIntake = new ExtendIntakeArm(intakeSubsystem);
+  private final RetractIntakeArm retractIntake = new RetractIntakeArm(intakeSubsystem);
 
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
   private final LaunchCommand launch = new LaunchCommand(shooterSubsystem);
@@ -32,17 +38,22 @@ public class RobotContainer {
   private final FeederSubsystem feederSubsystem = new FeederSubsystem();
   private final FeedCommand feed = new FeedCommand(feederSubsystem, hopperSubsystem);
 
-  private final TargetCommand target = new TargetCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, swerveSubsystem);
+  private final TargetCommand targetAndShoot = new TargetCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, swerveSubsystem);
 
   private final SpitFuelCommand spitFuel = new SpitFuelCommand(intakeSubsystem, hopperSubsystem, feederSubsystem);
 
+  private final SendableChooser<Command> autoChooser;
+
   public RobotContainer() {
     configureBindings();
+    configureNamedCommands();
+    autoChooser = AutoBuilder.buildAutoChooser();
+    SmartDashboard.putData(autoChooser);
   }
-  
+
   private void configureBindings() {
     driverController.a().whileTrue(spitFuel);
-    driverController.x().whileTrue(target);
+    driverController.x().whileTrue(targetAndShoot);
 
     driverController.rightBumper().whileTrue(launch);
     driverController.leftBumper().onTrue(toggleIntake);
@@ -50,8 +61,15 @@ public class RobotContainer {
     driverController.rightTrigger().whileTrue(feed);
   }
 
+  private void configureNamedCommands() {
+    NamedCommands.registerCommand("intakeFuel", intakeFuel);
+    NamedCommands.registerCommand("extendIntake", extendIntake);
+    NamedCommands.registerCommand("retractIntake", retractIntake);
+    NamedCommands.registerCommand("targetAndShoot", targetAndShoot);
+  }
+
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return autoChooser.getSelected();
   }
 
   public void onTeleopInit() {

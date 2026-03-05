@@ -6,8 +6,6 @@ import static frc.robot.Constants.ShooterConstants.*;
 import static frc.robot.Constants.HopperConstants.*;
 
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveSubsystem;
@@ -36,10 +34,10 @@ public class TargetCommand extends Command {
             shooterSubsystem.setShooterFlywheel(SHOOTER_FLYWHEEL_SPEED);
 
             Translation2d hubPosition;
-            if (DriverStation.getAlliance().get() == Alliance.Red) {
-                hubPosition = new Translation2d(Constants.FIELD_LENGTH.in(Meter) - Constants.ALLIANCE_ZONE_WIDTH.in(Meter), Constants.FIELD_WIDTH.in(Meter) / 2);
-            } else {
+            if (swerveSubsystem.isOnBlueAlliance()) {
                 hubPosition = new Translation2d(Constants.ALLIANCE_ZONE_WIDTH.in(Meter), Constants.FIELD_WIDTH.in(Meter) / 2);
+            } else {
+                hubPosition = new Translation2d(Constants.FIELD_LENGTH.in(Meter) - Constants.ALLIANCE_ZONE_WIDTH.in(Meter), Constants.FIELD_WIDTH.in(Meter) / 2);
             }
             hubPosition = hubPosition.minus(swerveSubsystem.getFieldVelocity().times(Constants.FUEL_FLIGHT_TIME.in(Second)));
 

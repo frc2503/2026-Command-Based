@@ -17,19 +17,13 @@
               {
                 "type": "wait",
                 "data": {
-                  "waitTime": 2.0
+                  "waitTime": 3.0
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "LaunchCommand"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "FeedCommand"
+                  "name": "SpinUpAndShootCommand"
                 }
               }
             ]
@@ -39,6 +33,6 @@
     }
   },
   "resetOdom": true,
-  "folder": "Blue",
+  "folder": null,
   "choreoAuto": false
 }

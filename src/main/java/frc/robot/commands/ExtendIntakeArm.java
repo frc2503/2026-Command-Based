@@ -13,11 +13,11 @@ public class ExtendIntakeArm extends InstantCommand {
 
   @Override
   public void initialize() {
-    intakeSubsystem.setIntakePosition(false);
+    intakeSubsystem.setIntakeState(IntakeSubsystem.IntakeState.EXTENDED);
   }
 
   @Override
   public boolean isFinished() {
-    return intakeSubsystem.isIntakeActuallyUp() == false;
+    return intakeSubsystem.getIntakeActualState() == IntakeSubsystem.IntakeState.EXTENDED;
   }
 }

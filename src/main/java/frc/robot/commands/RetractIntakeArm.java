@@ -13,11 +13,11 @@ public class RetractIntakeArm extends InstantCommand {
 
   @Override
   public void initialize() {
-    intakeSubsystem.setIntakePosition(true);
+    intakeSubsystem.setIntakeState(IntakeSubsystem.IntakeState.RETRACTED);
   }
 
   @Override
   public boolean isFinished() {
-      return intakeSubsystem.isIntakeActuallyUp() == true;
+      return intakeSubsystem.getIntakeActualState() == IntakeSubsystem.IntakeState.RETRACTED;
   }
 }

@@ -25,12 +25,12 @@ public class SpitFuelCommand extends Command {
 
     @Override
     public void initialize() {
-        intakeSubsystem.setIntakePosition(false);
+        intakeSubsystem.setIntakeState(IntakeSubsystem.IntakeState.EXTENDED);
     }
 
     @Override
     public void execute() {
-        if (!intakeSubsystem.isIntakeActuallyUp()) {
+        if (intakeSubsystem.getIntakeActualState() == IntakeSubsystem.IntakeState.EXTENDED) {
             intakeSubsystem.setIntake(-INTAKE_ROLLER_POWER);
         } else {
             intakeSubsystem.stop();
@@ -44,10 +44,5 @@ public class SpitFuelCommand extends Command {
         intakeSubsystem.stop();
         hopperSubsystem.stop();
         feederSubsystem.stop();
-    }
-
-    @Override
-    public boolean isFinished() {
-        return false;
     }
 }

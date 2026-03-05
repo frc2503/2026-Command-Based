@@ -15,7 +15,6 @@ import static edu.wpi.first.units.Units.Rotation;
 import static frc.robot.Constants.IntakeConstants.*;
 
 import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import com.revrobotics.spark.SparkMax;
@@ -26,7 +25,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private final SparkAbsoluteEncoder intakeArmAbsoluteEncoder;
     private final SparkMax intakeRollerMotor;
 
-    private boolean isIntakeUp = true;
+    private IntakeState intendedState = IntakeState.RETRACTED;
 
     public IntakeSubsystem() {
         intakeArmMotor = new SparkMax(INTAKE_ARM_ID, MotorType.kBrushless);
@@ -52,47 +51,53 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeRollerConfig.smartCurrentLimit(INTAKE_ROLLER_CURRENT_LIMIT);
         intakeRollerMotor.configure(intakeRollerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        setIntakePosition(isIntakeUp);
+        setIntakeState(intendedState);
     }
 
     public void setIntake(double power) {
         intakeRollerMotor.set(-power);
     }
 
-    public void setIntakeAngle(Angle angle) {
+    private void setIntakeAngle(Angle angle) {
         intakeArmController.setSetpoint(angle.in(Rotation), SparkBase.ControlType.kPosition);
     }
 
-    public void setIntakePosition(boolean up) {
-        if (up) {
-            setIntakeAngle(INTAKE_ARM_UP_ANGLE);
+    public void setIntakeState(IntakeState state) {
+        if (state == IntakeState.EXTENDED) {
+            setIntakeAngle(INTAKE_ARM_EXTENDED_ANGLE);
         } else {
-            setIntakeAngle(INTAKE_ARM_DOWN_ANGLE);
+            setIntakeAngle(INTAKE_ARM_RETRACTED_ANGLE);
         }
-        isIntakeUp = up;
+        intendedState = state;
     }
 
     public void toggleIntake() {
-        setIntakePosition(!isIntakeUp);
+        if (intendedState == IntakeState.RETRACTED) {
+            setIntakeState(IntakeState.EXTENDED);
+        } else {
+            setIntakeState(IntakeState.RETRACTED);
+        }
     }
 
-    public boolean isIntakeIntendedUp() {
-        return isIntakeUp;
+    public IntakeState getIntakeIntendedState() {
+        return intendedState;
     }
 
-    public boolean isIntakeActuallyUp() {
-        return intakeArmAbsoluteEncoder.getPosition() < INTAKE_ARM_DOWN_ANGLE.minus(INTAKE_ARM_UP_ANGLE).div(2).plus(INTAKE_ARM_UP_ANGLE).in(Rotation);
+    public IntakeState getIntakeActualState() {
+        Angle halfExtended = INTAKE_ARM_EXTENDED_ANGLE.minus(INTAKE_ARM_RETRACTED_ANGLE).div(2).plus(INTAKE_ARM_RETRACTED_ANGLE);
+        if (intakeArmAbsoluteEncoder.getPosition() > halfExtended.in(Rotation)) {
+            return IntakeState.EXTENDED;
+        } else {
+            return IntakeState.RETRACTED;
+        }
     }
 
     public void stop() {
         intakeRollerMotor.set(0);
     }
 
-    public double getAbsoluteEncoderPosition() {
-        return intakeArmAbsoluteEncoder.getPosition();
-    }
-
-    @Override
-    public void periodic() {
+    public static enum IntakeState {
+        RETRACTED,
+        EXTENDED
     }
 }

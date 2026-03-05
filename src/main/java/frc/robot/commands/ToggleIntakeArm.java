@@ -18,6 +18,6 @@ public class ToggleIntakeArm extends InstantCommand {
 
   @Override
   public boolean isFinished() {
-    return intakeSubsystem.isIntakeIntendedUp() == intakeSubsystem.isIntakeActuallyUp();
+    return intakeSubsystem.getIntakeIntendedState() == intakeSubsystem.getIntakeActualState();
   }
 }

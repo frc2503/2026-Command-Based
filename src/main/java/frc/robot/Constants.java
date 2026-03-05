@@ -45,7 +45,7 @@ public final class Constants {
     public static final int INTAKE_ARM_CURRENT_LIMIT = 60;
     public static final Angle INTAKE_ARM_ALLOWED_ERROR = Units.Degrees.of(1);
 
-    public static final double INTAKE_ARM_KP = 2.5;
+    public static final double INTAKE_ARM_KP = 0.1;
     public static final double INTAKE_ARM_KI = 0.0;
     public static final double INTAKE_ARM_KD = 0.0;
   }

@@ -55,10 +55,10 @@ public class RobotContainer {
     driverController.a().whileTrue(spitFuel);
     driverController.x().whileTrue(targetAndShoot);
 
-    driverController.rightBumper().whileTrue(launch);
+    driverController.rightTrigger().whileTrue(launch);
+    driverController.rightBumper().whileTrue(feed);
     driverController.leftBumper().onTrue(toggleIntake);
     driverController.leftTrigger().whileTrue(intakeFuel);
-    driverController.rightTrigger().whileTrue(feed);
   }
 
   private void configureNamedCommands() {

@@ -36,26 +36,26 @@ public final class Constants {
 
   public final class IntakeConstants {
     public static final int INTAKE_ROLLER_ID = 15;
-    public static final double INTAKE_ROLLER_POWER = 0.8;
+    public static final double INTAKE_ROLLER_POWER = 0.6;
     public static final int INTAKE_ROLLER_CURRENT_LIMIT = 20;
 
     public static final int INTAKE_ARM_ID = 14;
     public static final double INTAKE_ARM_ENCODER_OFFSET = 0.69;
-    public static final Angle INTAKE_ARM_UP_ANGLE = Units.Rotation.of(0.1);
-    public static final Angle INTAKE_ARM_DOWN_ANGLE = Units.Rotation.of(0.384);
+    public static final Angle INTAKE_ARM_UP_ANGLE = Units.Rotation.of(0.070);
+    public static final Angle INTAKE_ARM_DOWN_ANGLE = Units.Rotation.of(0.360);
     public static final double INTAKE_ARM_GEAR_RATIO = 20;
     public static final int INTAKE_ARM_CURRENT_LIMIT = 60;
     public static final Angle INTAKE_ARM_ALLOWED_ERROR = Units.Degrees.of(1);
 
-    public static final double INTAKE_ARM_KP = 0.1;
+    public static final double INTAKE_ARM_KP = 1;
     public static final double INTAKE_ARM_KI = 0.0;
-    public static final double INTAKE_ARM_KD = 0.0;
+    public static final double INTAKE_ARM_KD = 0.2;
   }
 
   public final class HopperConstants {
     public static final int HOPPER_ID = 7;
     public static final double HOPPER_POWER = 0.6;
-    public static final int HOPPER_CURRENT_LIMIT = 20;
+    public static final int HOPPER_CURRENT_LIMIT = 30;
   }
 
   public final class ShooterConstants {

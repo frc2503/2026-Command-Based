@@ -40,9 +40,8 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeArmConfig.closedLoop.allowedClosedLoopError(INTAKE_ARM_ALLOWED_ERROR.in(Rotation), ClosedLoopSlot.kSlot0);
         intakeArmConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);
         intakeArmConfig.absoluteEncoder.setSparkMaxDataPortConfig();
-        //intakeArmConfig.absoluteEncoder.zeroOffset(INTAKE_ARM_ENCODER_OFFSET);
-        // intakeArmConfig.absoluteEncoder.startPulseUs(3.884);
-        // intakeArmConfig.absoluteEncoder.endPulseUs(998.06);
+        intakeArmConfig.absoluteEncoder.inverted(true);
+        intakeArmConfig.absoluteEncoder.zeroOffset(INTAKE_ARM_ENCODER_OFFSET);
         intakeArmMotor.configure(intakeArmConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
         intakeRollerMotor = new SparkMax(INTAKE_ROLLER_ID, MotorType.kBrushless);

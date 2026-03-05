@@ -38,10 +38,9 @@ public final class Constants {
     public static final int INTAKE_ROLLER_CURRENT_LIMIT = 20;
 
     public static final int INTAKE_ARM_ID = 14;
-    public static final double INTAKE_ARM_ENCODER_OFFSET = .4;
-    public static final Angle INTAKE_ARM_UP_ANGLE = Units.Rotation.of(0.01);
-    // Should probably be 110, set low for testing
-    public static final Angle INTAKE_ARM_DOWN_ANGLE = Units.Degree.of(70);
+    public static final double INTAKE_ARM_ENCODER_OFFSET = -0.3;
+    public static final Angle INTAKE_ARM_UP_ANGLE = Units.Rotation.of(0.11);
+    public static final Angle INTAKE_ARM_DOWN_ANGLE = Units.Degree.of(0.);
     public static final double INTAKE_ARM_GEAR_RATIO = 20;
     public static final int INTAKE_ARM_CURRENT_LIMIT = 60;
     public static final Angle INTAKE_ARM_ALLOWED_ERROR = Units.Degrees.of(1);

@@ -16,6 +16,8 @@ public final class Constants {
   public static final LinearVelocity MAXIMUM_VELOCITY = Units.MetersPerSecond.of(4);
   public static final AngularVelocity MAXIMUM_ANGULAR_VELOCITY = Units.DegreesPerSecond.of(270);
   public static final LinearVelocity MAXIMUM_MODULE_VELOCITY = Units.MetersPerSecond.of(5);
+  public static final AngularVelocity MINIMUM_ANGULAR_VELOCITY = Units.DegreesPerSecond.of(1);
+  public static final LinearVelocity MINIMUM_MODULE_VELOCITY = Units.MetersPerSecond.of(0.1);
 
   public static final Time FUEL_FLIGHT_TIME = Units.Second.of(3);
 

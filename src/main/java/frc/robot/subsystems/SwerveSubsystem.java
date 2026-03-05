@@ -58,17 +58,23 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void drive(double x, double y, double rot, boolean fieldOriented) {
-        Translation2d translation = new Translation2d(y, x);
+        Translation2d translation = new Translation2d(y, x).times(Constants.MAXIMUM_VELOCITY.in(MetersPerSecond));
+        rot *= Constants.MAXIMUM_ANGULAR_VELOCITY.in(RadiansPerSecond);
         
         //Apply deadzones
-        translation = translation.getNorm() > 0.075 ? translation.times(Constants.MAXIMUM_VELOCITY.in(MetersPerSecond)) : Translation2d.kZero;
-        rot = Math.abs(rot) > 0.075 ? rot * Constants.MAXIMUM_ANGULAR_VELOCITY.in(RadiansPerSecond) : 0;
+        translation = translation.getNorm() > Constants.MINIMUM_MODULE_VELOCITY.in(MetersPerSecond) ? translation : Translation2d.kZero;
+        rot = Math.abs(rot) > Constants.MINIMUM_ANGULAR_VELOCITY.in(RadiansPerSecond) ? rot : 0;
 
         if (target.isPresent()) {
             rot = anglePidController.calculate(getPose().getRotation().getDegrees(), target.get().getDegrees());
         }
 
-        if (translation.equals(Translation2d.kZero) && rot == 0 && swerveDrive.getFieldVelocity().equals(new ChassisSpeeds())) {
+        Translation2d swerveVelocity = new Translation2d(swerveDrive.getFieldVelocity().vxMetersPerSecond, swerveDrive.getFieldVelocity().vyMetersPerSecond);
+        double swerveAngularVelocity = swerveDrive.getFieldVelocity().omegaRadiansPerSecond;
+
+        if (translation.equals(Translation2d.kZero) && rot == 0
+            && swerveVelocity.getNorm() < Constants.MINIMUM_MODULE_VELOCITY.in(MetersPerSecond)
+            && Math.abs(swerveAngularVelocity) < Constants.MINIMUM_ANGULAR_VELOCITY.in(RadiansPerSecond)) {
             swerveDrive.lockPose();
         } else {
             swerveDrive.drive(translation, rot, fieldOriented, false);

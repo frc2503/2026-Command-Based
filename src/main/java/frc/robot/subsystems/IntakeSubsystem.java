@@ -81,10 +81,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public boolean isIntakeActuallyUp() {
-        SmartDashboard.putNumber("Encoder", intakeArmMotor.getEncoder().getPosition())
-        SmartDashboard.putNumber("Halfway calc", INTAKE_ARM_DOWN_ANGLE.minus(INTAKE_ARM_UP_ANGLE).div(2).plus(INTAKE_ARM_UP_ANGLE).in(Rotation))
-        return false;
-        //return intakeArmMotor.getEncoder().getPosition() < INTAKE_ARM_DOWN_ANGLE.minus(INTAKE_ARM_UP_ANGLE).div(2).plus(INTAKE_ARM_UP_ANGLE).in(Rotation);
+        return intakeArmAbsoluteEncoder.getPosition() < INTAKE_ARM_DOWN_ANGLE.minus(INTAKE_ARM_UP_ANGLE).div(2).plus(INTAKE_ARM_UP_ANGLE).in(Rotation);
     }
 
     public void stop() {
@@ -97,6 +94,5 @@ public class IntakeSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("Encoder", getAbsoluteEncoderPosition());
     }
 }

@@ -81,6 +81,8 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public boolean isIntakeActuallyUp() {
+        SmartDashboard.putNumber("Encoder", intakeArmMotor.getEncoder().getPosition())
+        SmartDashboard.putNumber("Halfway calc", INTAKE_ARM_DOWN_ANGLE.minus(INTAKE_ARM_UP_ANGLE).div(2).plus(INTAKE_ARM_UP_ANGLE).in(Rotation))
         return intakeArmMotor.getEncoder().getPosition() < INTAKE_ARM_DOWN_ANGLE.minus(INTAKE_ARM_UP_ANGLE).div(2).plus(INTAKE_ARM_UP_ANGLE).in(Rotation);
     }
 

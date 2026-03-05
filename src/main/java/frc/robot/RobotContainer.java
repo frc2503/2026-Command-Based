@@ -41,12 +41,12 @@ public class RobotContainer {
   }
   
   private void configureBindings() {
-    driverController.a().whileTrue(intakeFuel);
-    driverController.x().onTrue(toggleIntake);
+    driverController.a().whileTrue(spitFuel);
+    driverController.x().whileTrue(target);
 
     driverController.rightBumper().whileTrue(launch);
-    driverController.leftBumper().whileTrue(target);
-    driverController.leftTrigger().whileTrue(spitFuel);
+    driverController.leftBumper().onTrue(toggleIntake);
+    driverController.leftTrigger().whileTrue(intakeFuel);
     driverController.rightTrigger().whileTrue(feed);
   }
 

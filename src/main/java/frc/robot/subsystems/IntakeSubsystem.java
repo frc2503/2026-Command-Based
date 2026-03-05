@@ -81,7 +81,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public boolean isIntakeActuallyUp() {
-        return intakeArmMotor.getEncoder().getPosition() > INTAKE_ARM_DOWN_ANGLE.in(Rotation)/2;
+        return intakeArmMotor.getEncoder().getPosition() > INTAKE_ARM_DOWN_ANGLE.minus(INTAKE_ARM_UP_ANGLE).div(2).plus(INTAKE_ARM_UP_ANGLE).in(Rotation);
     }
 
     public void stop() {

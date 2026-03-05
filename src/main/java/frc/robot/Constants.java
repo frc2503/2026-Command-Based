@@ -37,7 +37,7 @@ public final class Constants {
   public final class IntakeConstants {
     public static final int INTAKE_ROLLER_ID = 15;
     public static final double INTAKE_ROLLER_POWER = 0.6;
-    public static final int INTAKE_ROLLER_CURRENT_LIMIT = 20;
+    public static final int INTAKE_ROLLER_CURRENT_LIMIT = 40;
 
     public static final int INTAKE_ARM_ID = 14;
     public static final double INTAKE_ARM_ENCODER_OFFSET = 0.69;

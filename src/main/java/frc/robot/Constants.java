@@ -26,9 +26,9 @@ public final class Constants {
   public static final Distance FIELD_WIDTH = Units.Inch.of(317.69);
   public static final Distance ALLIANCE_ZONE_WIDTH = Units.Inch.of(182.11);
 
-  public static final double SWERVE_ANGLE_KP = .3;
+  public static final double SWERVE_ANGLE_KP = .4;
   public static final double SWERVE_ANGLE_KI = 0;
-  public static final double SWERVE_ANGLE_KD = 0;
+  public static final double SWERVE_ANGLE_KD = 1;
   public static final Angle SWERVE_ANGLE_TOLERANCE = Units.Degree.of(1);
 
   public static final String LEFT_LIMELIGHT_NAME = "left";

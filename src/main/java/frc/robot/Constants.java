@@ -14,10 +14,10 @@ public final class Constants {
   public static final NetworkTableInstance NETWORK_TABLE = NetworkTableInstance.getDefault();
 
   public static final LinearVelocity MAXIMUM_VELOCITY = Units.MetersPerSecond.of(4);
-  public static final AngularVelocity MAXIMUM_ANGULAR_VELOCITY = Units.DegreesPerSecond.of(270);
+  public static final AngularVelocity MAXIMUM_ANGULAR_VELOCITY = Units.DegreesPerSecond.of(420);
   public static final LinearVelocity MAXIMUM_MODULE_VELOCITY = Units.MetersPerSecond.of(5);
-  public static final AngularVelocity MINIMUM_ANGULAR_VELOCITY = Units.DegreesPerSecond.of(1);
-  public static final LinearVelocity MINIMUM_MODULE_VELOCITY = Units.MetersPerSecond.of(0.2);
+  public static final AngularVelocity MINIMUM_ANGULAR_VELOCITY = Units.DegreesPerSecond.of(5);
+  public static final LinearVelocity MINIMUM_MODULE_VELOCITY = Units.MetersPerSecond.of(.8);
 
   public static final Time FUEL_FLIGHT_TIME = Units.Second.of(3);
 
@@ -36,20 +36,19 @@ public final class Constants {
 
   public final class IntakeConstants {
     public static final int INTAKE_ROLLER_ID = 15;
-    public static final double INTAKE_ROLLER_POWER = 0.6;
+    public static final double INTAKE_ROLLER_POWER = 0.8;
     public static final int INTAKE_ROLLER_CURRENT_LIMIT = 40;
-
     public static final int INTAKE_ARM_ID = 14;
     public static final double INTAKE_ARM_ENCODER_OFFSET = 0.69;
-    public static final Angle INTAKE_ARM_RETRACTED_ANGLE = Units.Rotation.of(0.070);
-    public static final Angle INTAKE_ARM_EXTENDED_ANGLE = Units.Rotation.of(0.3710);
+    public static final Angle INTAKE_ARM_UP_ANGLE = Units.Rotation.of(0.080);
+    public static final Angle INTAKE_ARM_DOWN_ANGLE = Units.Rotation.of(0.45);
     public static final double INTAKE_ARM_GEAR_RATIO = 20;
     public static final int INTAKE_ARM_CURRENT_LIMIT = 60;
     public static final Angle INTAKE_ARM_ALLOWED_ERROR = Units.Degrees.of(1);
 
     public static final double INTAKE_ARM_KP = .9;
     public static final double INTAKE_ARM_KI = 0.00001;
-    public static final double INTAKE_ARM_KD = 5;
+    public static final double INTAKE_ARM_KD = 7;
   }
 
   public final class HopperConstants {
@@ -77,7 +76,7 @@ public final class Constants {
 
   public final class OperatorConstants {
     public static final int DRIVER_CONTROLLER_PORT = 0;
-    public static final int OPERATOR_CONTROLLER_PORT = 1;
+    //public static final int OPERATOR_CONTROLLER_PORT = 1;
   }
 
   public final class AutoConstants {

@@ -14,8 +14,11 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import static edu.wpi.first.units.Units.Rotation;
 import static frc.robot.Constants.IntakeConstants.*;
 
+import java.util.Optional;
+
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.LimelightHelpers.PoseEstimate;
 
 import com.revrobotics.spark.SparkMax;
 
@@ -63,11 +66,6 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void setIntakeState(IntakeState state) {
-        if (state == IntakeState.EXTENDED) {
-            setIntakeAngle(INTAKE_ARM_EXTENDED_ANGLE);
-        } else {
-            setIntakeAngle(INTAKE_ARM_RETRACTED_ANGLE);
-        }
         intendedState = state;
     }
 
@@ -94,6 +92,19 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void stop() {
         intakeRollerMotor.set(0);
+    }
+
+    @Override
+    public void periodic() {
+        if (intendedState == IntakeState.EXTENDED) {
+            if (intakeArmAbsoluteEncoder.getPosition() > INTAKE_ARM_EXTENDED_ANGLE.minus(INTAKE_ARM_ALLOWED_ERROR).in(Rotation)) {
+                intakeArmMotor.set(INTAKE_ARM_HOLD_POWER);
+            } else {
+                setIntakeAngle(INTAKE_ARM_EXTENDED_ANGLE);
+            }
+        } else {
+            setIntakeAngle(INTAKE_ARM_RETRACTED_ANGLE);
+        }
     }
 
     public static enum IntakeState {

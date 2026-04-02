@@ -6,6 +6,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import static frc.robot.Constants.OperatorConstants.*;
 
+import org.opencv.core.Mat;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -17,12 +19,12 @@ public class RobotContainer {
   private final CommandXboxController driverController = new CommandXboxController(DRIVER_CONTROLLER_PORT);
 
   // The operator's controller
-  //private final CommandXboxController operatorController = new CommandXboxController(OPERATOR_CONTROLLER_PORT);
+  private final CommandXboxController operatorController = new CommandXboxController(OPERATOR_CONTROLLER_PORT);
 
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
 
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(visionSubsystem);
-  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> -driverController.getLeftX(), () -> -driverController.getLeftY(), () -> -driverController.getRightX(), () -> true);
+  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> -applyDeadzoneAndCurve(driverController.getLeftX()), () -> -applyDeadzoneAndCurve(driverController.getLeftY()), () -> -applyDeadzoneAndCurve(driverController.getRightX()), () -> true);
 
   private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
@@ -54,10 +56,9 @@ public class RobotContainer {
 
   private void configureBindings() {
     driverController.a().whileTrue(spitFuel);
-    driverController.x().whileTrue(targetAndShoot);
-
-    driverController.rightTrigger().whileTrue(launch);
-    driverController.rightBumper().whileTrue(feed);
+    //driverController.x().whileTrue(targetAndShoot);
+    driverController.rightTrigger().whileTrue(spinUpAndShoot);
+    
     driverController.leftBumper().onTrue(toggleIntake);
     driverController.leftTrigger().whileTrue(intakeFuel);
   }
@@ -76,5 +77,12 @@ public class RobotContainer {
 
   public void onTeleopInit() {
     swerveSubsystem.setDefaultCommand(swerveCommand);
+  }
+
+  private double applyDeadzoneAndCurve(double controllerInput) {
+    if (Math.abs(controllerInput) < DEADZONE) {
+      return 0;
+    }
+    return Math.pow(Math.abs(controllerInput), OUTPUT_CURVE) * controllerInput / Math.abs(controllerInput);
   }
 }

@@ -35,7 +35,7 @@ public class IntakeSubsystem extends SubsystemBase {
         SparkMaxConfig intakeArmConfig = new SparkMaxConfig();
         intakeArmConfig.idleMode(IdleMode.kBrake);
         intakeArmConfig.smartCurrentLimit(INTAKE_ARM_CURRENT_LIMIT);
-        intakeArmConfig.inverted(true);
+        intakeArmConfig.inverted(false);
         intakeArmConfig.closedLoop.pid(INTAKE_ARM_KP, INTAKE_ARM_KI, INTAKE_ARM_KD);
         intakeArmConfig.closedLoop.allowedClosedLoopError(INTAKE_ARM_ALLOWED_ERROR.in(Rotation), ClosedLoopSlot.kSlot0);
         intakeArmConfig.closedLoop.feedbackSensor(FeedbackSensor.kAbsoluteEncoder);

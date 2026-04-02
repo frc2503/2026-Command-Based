@@ -18,7 +18,7 @@ public class FeederSubsystem extends SubsystemBase {
         shooterFeederMotor = new SparkMax(SHOOTER_FEEDER_CAN_ID, MotorType.kBrushless);
 
         SparkMaxConfig shooterFeederConfig = new SparkMaxConfig();
-        shooterFeederConfig.idleMode(IdleMode.kCoast);
+        shooterFeederConfig.idleMode(IdleMode.kBrake);
         shooterFeederConfig.smartCurrentLimit(SHOOTER_FEEDER_CURRENT_LIMIT);
         shooterFeederMotor.configure(shooterFeederConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
     }

@@ -5,6 +5,9 @@ import com.revrobotics.spark.FeedbackSensor;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
 import com.revrobotics.spark.SparkBase;
 import com.revrobotics.ResetMode;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.PersistMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
@@ -14,11 +17,8 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 import static edu.wpi.first.units.Units.Rotation;
 import static frc.robot.Constants.IntakeConstants.*;
 
-import java.util.Optional;
-
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.LimelightHelpers.PoseEstimate;
 
 import com.revrobotics.spark.SparkMax;
 
@@ -26,7 +26,7 @@ public class IntakeSubsystem extends SubsystemBase {
     private final SparkMax intakeArmMotor;
     private final SparkClosedLoopController intakeArmController;
     private final SparkAbsoluteEncoder intakeArmAbsoluteEncoder;
-    private final SparkMax intakeRollerMotor;
+    private final TalonFX intakeRollerMotor;
 
     private IntakeState intendedState = IntakeState.RETRACTED;
 
@@ -47,12 +47,12 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeArmConfig.absoluteEncoder.zeroOffset(INTAKE_ARM_ENCODER_OFFSET);
         intakeArmMotor.configure(intakeArmConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        intakeRollerMotor = new SparkMax(INTAKE_ROLLER_ID, MotorType.kBrushless);
+        intakeRollerMotor = new TalonFX(INTAKE_ROLLER_ID);
 
-        SparkMaxConfig intakeRollerConfig = new SparkMaxConfig();
-        intakeRollerConfig.idleMode(IdleMode.kCoast);
-        intakeRollerConfig.smartCurrentLimit(INTAKE_ROLLER_CURRENT_LIMIT);
-        intakeRollerMotor.configure(intakeRollerConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        TalonFXConfiguration shooterFlywheelConfig = new TalonFXConfiguration();
+        shooterFlywheelConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        shooterFlywheelConfig.CurrentLimits.StatorCurrentLimit = INTAKE_ROLLER_CURRENT_LIMIT;
+        intakeRollerMotor.getConfigurator().apply(shooterFlywheelConfig);
 
         setIntakeState(intendedState);
     }

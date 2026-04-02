@@ -4,6 +4,7 @@ import static edu.wpi.first.units.Units.Degree;
 import static edu.wpi.first.units.Units.DegreesPerSecond;
 import static edu.wpi.first.units.Units.Meter;
 import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.Radians;
 import static edu.wpi.first.units.Units.RadiansPerSecond;
 
 import java.io.File;
@@ -26,6 +27,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import static frc.robot.Constants.AutoConstants.*;
@@ -67,10 +69,6 @@ public class SwerveSubsystem extends SubsystemBase {
     public void drive(double x, double y, double rot, boolean fieldOriented) {
         Translation2d translation = new Translation2d(y, x).times(Constants.MAXIMUM_VELOCITY.in(MetersPerSecond));
         rot *= Constants.MAXIMUM_ANGULAR_VELOCITY.in(RadiansPerSecond);
-        
-        //Apply deadzones
-        translation = translation.getNorm() > Constants.MINIMUM_MODULE_VELOCITY.in(MetersPerSecond) ? translation : Translation2d.kZero;
-        rot = Math.abs(rot) > Constants.MINIMUM_ANGULAR_VELOCITY.in(RadiansPerSecond) ? rot : 0;
 
         if (target.isPresent()) {
             rot = anglePidController.calculate(getPose().getRotation().getDegrees(), target.get().getDegrees());

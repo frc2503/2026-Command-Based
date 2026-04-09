@@ -29,7 +29,7 @@ public class RobotContainer {
   private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
   private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  private final IntakeFuelCommand intakeFuel = new IntakeFuelCommand(intakeSubsystem, hopperSubsystem);
+  private final IntakeFuelCommand intakeFuel = new IntakeFuelCommand(intakeSubsystem);
   private final ToggleIntakeArm toggleIntake = new ToggleIntakeArm(intakeSubsystem);
   private final ExtendIntakeArm extendIntake = new ExtendIntakeArm(intakeSubsystem);
   private final RetractIntakeArm retractIntake = new RetractIntakeArm(intakeSubsystem);
@@ -61,6 +61,8 @@ public class RobotContainer {
     
     driverController.leftBumper().onTrue(toggleIntake);
     driverController.leftTrigger().whileTrue(intakeFuel);
+    operatorController.leftBumper().onTrue(toggleIntake);
+    operatorController.leftTrigger().whileTrue(intakeFuel);
   }
 
   private void configureNamedCommands() {

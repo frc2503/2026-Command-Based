@@ -2,21 +2,18 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-import static frc.robot.Constants.HopperConstants.HOPPER_POWER;
 import static frc.robot.Constants.IntakeConstants.*;
 
-import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeFuelCommand extends Command {
     private IntakeSubsystem intakeSubsystem;
-    private HopperSubsystem hopperSubsystem;
 
-    public IntakeFuelCommand(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem) {
+
+    public IntakeFuelCommand(IntakeSubsystem intakeSubsystem) {
         this.intakeSubsystem = intakeSubsystem;
-        this.hopperSubsystem = hopperSubsystem;
 
-        addRequirements(intakeSubsystem, hopperSubsystem);
+        addRequirements(intakeSubsystem);
     }
 
     @Override
@@ -28,16 +25,13 @@ public class IntakeFuelCommand extends Command {
     public void execute() {
         if (intakeSubsystem.getIntakeActualState() == IntakeSubsystem.IntakeState.EXTENDED) {
             intakeSubsystem.setIntake(INTAKE_ROLLER_POWER);
-            hopperSubsystem.setHopper(HOPPER_POWER);
         } else {
             intakeSubsystem.stop();
-            hopperSubsystem.stop();
         }
     }
 
     @Override
     public void end(boolean interrupted) {
         intakeSubsystem.stop();
-        hopperSubsystem.stop();
     }
 }

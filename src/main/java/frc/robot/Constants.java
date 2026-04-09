@@ -36,18 +36,18 @@ public final class Constants {
 
   public final class IntakeConstants {
     public static final int INTAKE_ROLLER_ID = 15;
-    public static final double INTAKE_ROLLER_POWER = 0.6;
+    public static final double INTAKE_ROLLER_POWER = 0.8;
     public static final int INTAKE_ROLLER_CURRENT_LIMIT = 40;
     public static final int INTAKE_ARM_ID = 14;
-    public static final double INTAKE_ARM_ENCODER_OFFSET = 0;
-    public static final Angle INTAKE_ARM_RETRACTED_ANGLE = Units.Rotation.of(0.070);
-    public static final Angle INTAKE_ARM_EXTENDED_ANGLE = Units.Rotation.of(0.18);
-    public static final double INTAKE_ARM_HOLD_POWER = 0;
+    public static final double INTAKE_ARM_ENCODER_OFFSET = .2;
+    public static final Angle INTAKE_ARM_RETRACTED_ANGLE = Units.Rotation.of(0.150);
+    public static final Angle INTAKE_ARM_EXTENDED_ANGLE = Units.Rotation.of(0.537);
+    public static final double INTAKE_ARM_HOLD_POWER = .1;
     public static final double INTAKE_ARM_GEAR_RATIO = 20;
     public static final int INTAKE_ARM_CURRENT_LIMIT = 60;
     public static final Angle INTAKE_ARM_ALLOWED_ERROR = Units.Degrees.of(1);
 
-    public static final double INTAKE_ARM_KP = 3;
+    public static final double INTAKE_ARM_KP = 2.5;
     public static final double INTAKE_ARM_KI = 0.00001;
     public static final double INTAKE_ARM_KD = 7;
   }

@@ -97,11 +97,11 @@ public class IntakeSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         if (intendedState == IntakeState.EXTENDED) {
-            // if (intakeArmAbsoluteEncoder.getPosition() > INTAKE_ARM_EXTENDED_ANGLE.minus(INTAKE_ARM_ALLOWED_ERROR).in(Rotation)) {
-            //     intakeArmMotor.set(INTAKE_ARM_HOLD_POWER);
-            // } else {
+             if (intakeArmAbsoluteEncoder.getPosition() > INTAKE_ARM_EXTENDED_ANGLE.minus(INTAKE_ARM_ALLOWED_ERROR).in(Rotation)) {
+                 intakeArmMotor.set(INTAKE_ARM_HOLD_POWER);
+             } else {
             setIntakeAngle(INTAKE_ARM_EXTENDED_ANGLE);
-            // }
+             }
         } else {
             setIntakeAngle(INTAKE_ARM_RETRACTED_ANGLE);
         }

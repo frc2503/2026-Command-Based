@@ -105,8 +105,14 @@ public class SwerveSubsystem extends SubsystemBase {
     public boolean isOnBlueAlliance() {
         Optional<Alliance> alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
+            if (alliance.get() == DriverStation.Alliance.Blue) {
+                System.out.println("Blue");
+            } else {
+                System.out.println("Red");
+            }
             return alliance.get() == DriverStation.Alliance.Blue;
         }
+        System.out.println("No Alliance: Red");
         return false;
     }
 

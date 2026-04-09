@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import static frc.robot.Constants.OperatorConstants.*;
+import static frc.robot.Constants.ShooterConstants.*;
 
 import org.opencv.core.Mat;
 
@@ -24,7 +25,7 @@ public class RobotContainer {
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
 
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(visionSubsystem);
-  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> -applyDeadzoneAndCurve(driverController.getLeftX()), () -> -applyDeadzoneAndCurve(driverController.getLeftY()), () -> -applyDeadzoneAndCurve(driverController.getRightX()), () -> true);
+  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> -applyDeadzoneAndCurve(driverController.getLeftX()), () -> -applyDeadzoneAndCurve(driverController.getLeftY()), () -> -applyDeadzoneAndCurve(driverController.getRightX()), () -> driverController.getLeftTriggerAxis() <= .5);
 
   private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
@@ -35,7 +36,8 @@ public class RobotContainer {
   private final RetractIntakeArm retractIntake = new RetractIntakeArm(intakeSubsystem);
 
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  private final LaunchCommand launch = new LaunchCommand(shooterSubsystem);
+  private final LaunchCommand launch = new LaunchCommand(shooterSubsystem, SHOOTER_FLYWHEEL_SPEED);
+  private final LaunchCommand launchFaster = new LaunchCommand(shooterSubsystem, SHOOTER_FLYWHEEL_HIGH_SPEED);
   
   private final FeederSubsystem feederSubsystem = new FeederSubsystem();
   private final FeedCommand feed = new FeedCommand(feederSubsystem, hopperSubsystem);
@@ -57,7 +59,9 @@ public class RobotContainer {
   private void configureBindings() {
     driverController.a().whileTrue(spitFuel);
     //driverController.x().whileTrue(targetAndShoot);
-    driverController.rightTrigger().whileTrue(spinUpAndShoot);
+    driverController.rightTrigger().whileTrue(feed);
+    driverController.x().whileTrue(launch);
+    driverController.y().whileTrue(launchFaster);
     
     driverController.leftBumper().onTrue(toggleIntake);
     driverController.leftTrigger().whileTrue(intakeFuel);

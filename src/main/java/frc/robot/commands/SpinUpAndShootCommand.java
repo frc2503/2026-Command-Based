@@ -25,7 +25,6 @@ public class SpinUpAndShootCommand extends Command {
     @Override
     public void execute() {
         shooterSubsystem.setShooterFlywheel(SHOOTER_FLYWHEEL_SPEED);
-        
 
         if (shooterSubsystem.getVelocity().isNear(SHOOTER_FLYWHEEL_SPEED, SHOOTER_FLYWHEEL_SPEED_TOLERANCE)) {
             feederSubsystem.setShooterFeeder(SHOOTER_FEEDER_POWER);

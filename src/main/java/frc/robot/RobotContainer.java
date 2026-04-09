@@ -7,8 +7,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import static frc.robot.Constants.OperatorConstants.*;
 import static frc.robot.Constants.ShooterConstants.*;
 
-import org.opencv.core.Mat;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 

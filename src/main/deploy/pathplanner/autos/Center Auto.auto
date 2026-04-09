@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red Center Back"
+            "pathName": "Center Back"
           }
         },
         {
@@ -27,18 +27,6 @@
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Red Alliance Right"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Red Ramp Right"
           }
         }
       ]

@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Alliance 3 to Hub 2"
+            "pathName": "Center Back"
           }
         },
         {
@@ -23,47 +23,41 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "targetAndShoot"
+                  "name": "spinUpAndShoot"
                 }
               }
             ]
-          }
-        },
-        {
-          "type": "parallel",
-          "data": {
-            "commands": [
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "Hub 2 to Outpost"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "extendIntake"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 3.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Outpost to Hub 2"
+            "pathName": "Back to Depot"
           }
         },
         {
-          "type": "named",
+          "type": "deadline",
           "data": {
-            "name": "targetAndShoot"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Intake Depot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeFuel"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Done Depot to Shoot"
           }
         },
         {
@@ -79,16 +73,35 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "targetAndShoot"
+                  "name": "spinUpAndShoot"
                 }
               }
             ]
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "retractIntake"
+            "pathName": "Alliance Left"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Ramp Left"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "retractIntake"
+                }
+              }
+            ]
           }
         }
       ]

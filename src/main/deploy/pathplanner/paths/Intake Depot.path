@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 12.903349397590361,
-        "y": 2.505120481927711
+        "x": 0.4129759036144577,
+        "y": 4.952927710843373
       },
       "prevControl": null,
       "nextControl": {
-        "x": 12.094698795180724,
-        "y": 2.4614096385542172
+        "x": 0.41297590361445774,
+        "y": 5.9801906545975
       },
-      "isLocked": false,
-      "linkedName": "Red Left Ramp"
+      "isLocked": true,
+      "linkedName": "Ready to Depot"
     },
     {
       "anchor": {
-        "x": 9.525049928673324,
-        "y": 2.505120481927711
+        "x": 0.4129759036144577,
+        "y": 6.9308433734939765
       },
       "prevControl": {
-        "x": 10.16978486843236,
-        "y": 2.4832650602409645
+        "x": 0.412975903614458,
+        "y": 6.439096385542168
       },
       "nextControl": null,
-      "isLocked": false,
-      "linkedName": null
+      "isLocked": true,
+      "linkedName": "Done with Depot"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 0.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -178.83086067209254
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 90.0
   },
   "useDefaultConstraints": false
 }

@@ -176,9 +176,9 @@ public class SwerveSubsystem extends SubsystemBase {
         }
 
         if (isOnBlueAlliance) {
-            System.out.println("Blue");
+            System.out.println("Blue Side");
         } else {
-            System.out.println("Red");
+            System.out.println("Red Side");
         }
     }
 

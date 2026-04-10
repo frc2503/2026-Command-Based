@@ -72,18 +72,22 @@ public class RobotContainer {
     NamedCommands.registerCommand("targetAndShoot", targetAndShoot);
   }
 
+  private double applyDeadzoneAndCurve(double controllerInput) {
+    if (Math.abs(controllerInput) < DEADZONE) {
+      return 0;
+    }
+    return Math.pow(Math.abs(controllerInput), OUTPUT_CURVE) * controllerInput / Math.abs(controllerInput);
+  }
+
+  public void disabledPeriodic() {
+    swerveSubsystem.disabledPeriodic();
+  }
+
   public Command getAutonomousCommand() {
     return autoChooser.getSelected();
   }
 
   public void onTeleopInit() {
     swerveSubsystem.setDefaultCommand(swerveCommand);
-  }
-
-  private double applyDeadzoneAndCurve(double controllerInput) {
-    if (Math.abs(controllerInput) < DEADZONE) {
-      return 0;
-    }
-    return Math.pow(Math.abs(controllerInput), OUTPUT_CURVE) * controllerInput / Math.abs(controllerInput);
   }
 }

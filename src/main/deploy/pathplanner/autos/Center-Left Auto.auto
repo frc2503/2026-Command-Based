@@ -40,6 +40,43 @@
           "data": {
             "pathName": "Ramp Left"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Blue Left Line Up With Fuel"
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Get Fuel"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeFuel"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "New Path"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "New New Path"
+          }
         }
       ]
     }

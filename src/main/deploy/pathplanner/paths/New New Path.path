@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.569543509272467,
-        "y": 5.477660485021398
+        "x": 2.3570328102710407,
+        "y": 5.839942938659058
       },
       "isLocked": false,
       "linkedName": "Blue Left Ramp"
     },
     {
       "anchor": {
-        "x": 5.966918687589158,
-        "y": 5.521168674698795
+        "x": 2.5,
+        "y": 4.0
       },
       "prevControl": {
-        "x": 4.8541940085592,
-        "y": 5.749372325249644
+        "x": 2.4864194008559197,
+        "y": 4.869543509272469
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Blue Left End"
+      "linkedName": "Blue Shoot"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 42.47783103661925
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
@@ -50,5 +50,5 @@
     "velocity": 0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

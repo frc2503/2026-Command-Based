@@ -56,7 +56,7 @@ public class RobotContainer {
     driverController.a().whileTrue(spitFuel);
     //driverController.x().whileTrue(targetAndShoot);
     driverController.rightTrigger().whileTrue(spinUpAndShoot);
-    driverController.x().whileTrue(spinUpAndShootFaster);
+    driverController.rightBumper().whileTrue(spinUpAndShootFaster);
     
     driverController.leftBumper().onTrue(toggleIntake);
     driverController.leftTrigger().whileTrue(intakeFuel);

@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.5,
-        "y": 4.0
+        "x": 2.1370756062767473,
+        "y": 4.00265335235378
       },
       "prevControl": {
-        "x": 2.4864194008559197,
-        "y": 4.869543509272469
+        "x": 2.123495007132667,
+        "y": 4.872196861626249
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Blue Shoot"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],

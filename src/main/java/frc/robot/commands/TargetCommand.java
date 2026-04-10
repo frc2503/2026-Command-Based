@@ -34,7 +34,7 @@ public class TargetCommand extends Command {
             shooterSubsystem.setShooterFlywheel(SHOOTER_FLYWHEEL_SPEED);
 
             Translation2d hubPosition;
-            if (swerveSubsystem.getIsOnBlueAlliance()) {
+            if (swerveSubsystem.isOnBlueAlliance()) {
                 hubPosition = new Translation2d(Constants.ALLIANCE_ZONE_WIDTH.in(Meter), Constants.FIELD_WIDTH.in(Meter) / 2);
             } else {
                 hubPosition = new Translation2d(Constants.FIELD_LENGTH.in(Meter) - Constants.ALLIANCE_ZONE_WIDTH.in(Meter), Constants.FIELD_WIDTH.in(Meter) / 2);

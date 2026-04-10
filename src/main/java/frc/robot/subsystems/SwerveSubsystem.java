@@ -40,7 +40,6 @@ public class SwerveSubsystem extends SubsystemBase {
     private VisionSubsystem visionSubsystem;
     private Optional<Rotation2d> target = Optional.empty();
     private ProfiledPIDController anglePidController;
-    private boolean isOnBlueAlliance;
 
     private StructPublisher<Pose2d> posePublisher;
 
@@ -62,18 +61,11 @@ public class SwerveSubsystem extends SubsystemBase {
         this.visionSubsystem = visionSubsystem;
 
         posePublisher = Constants.NETWORK_TABLE.getStructTopic("RobotPose", Pose2d.struct).publish();
-
-        Optional<Boolean> isDSBlue = isDriverStationBlue();
-        if (isDSBlue.isPresent()) {
-            isOnBlueAlliance = isDSBlue.get();
-        } else {
-            isOnBlueAlliance = true;
-        }
         configureAutoBuilder();
     }
 
     public void drive(double x, double y, double rot, boolean fieldOriented) {
-        Translation2d translation = new Translation2d(y, x).times(Constants.MAXIMUM_VELOCITY.in(MetersPerSecond));
+        Translation2d translation = new Translation2d(x, y).times(Constants.MAXIMUM_VELOCITY.in(MetersPerSecond));
         rot *= Constants.MAXIMUM_ANGULAR_VELOCITY.in(RadiansPerSecond);
 
         if (target.isPresent()) {
@@ -101,23 +93,19 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public boolean isInAllianceZone() {
-        if (isOnBlueAlliance) {
+        if (isOnBlueAlliance()) {
             return swerveDrive.getPose().getMeasureX().in(Meter) <= Constants.ALLIANCE_ZONE_WIDTH.in(Meter);
         } else {
             return swerveDrive.getPose().getMeasureX().in(Meter) >= Constants.FIELD_LENGTH.in(Meter) - Constants.ALLIANCE_ZONE_WIDTH.in(Meter);
         }
     }
 
-    public boolean getIsOnBlueAlliance() {
-        return isOnBlueAlliance;
-    }
-
-    public Optional<Boolean> isDriverStationBlue() {
+    public boolean isOnBlueAlliance() {
         Optional<Alliance> alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
-            return Optional.of(alliance.get() == DriverStation.Alliance.Blue);
+            return alliance.get() == DriverStation.Alliance.Blue;
         }
-        return Optional.empty();
+        return true;
     }
 
     public Pose2d getPose() {
@@ -160,25 +148,11 @@ public class SwerveSubsystem extends SubsystemBase {
                         new PIDConstants(AUTO_ROTATION_KP, AUTO_ROTATION_KI, AUTO_ROTATION_KD) // Rotation PID constants
                 ),
                 config,
-                () -> { return !isOnBlueAlliance; },
+                () -> { return !isOnBlueAlliance(); },
                 this
             );
         } catch (Exception e) {
             e.printStackTrace();
-        }
-    }
-
-    public void disabledPeriodic() {
-        Optional<Boolean> isDSBlue = isDriverStationBlue();
-        if (isDSBlue.isPresent() && isOnBlueAlliance != isDSBlue.get()) {
-            isOnBlueAlliance = isDSBlue.get();
-            configureAutoBuilder();
-        }
-
-        if (isOnBlueAlliance) {
-            System.out.println("Blue Side");
-        } else {
-            System.out.println("Red Side");
         }
     }
 

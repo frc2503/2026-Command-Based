@@ -23,7 +23,13 @@ public class RobotContainer {
   private final VisionSubsystem visionSubsystem = new VisionSubsystem();
 
   private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(visionSubsystem);
-  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> -applyDeadzoneAndCurve(driverController.getLeftX()), () -> -applyDeadzoneAndCurve(driverController.getLeftY()), () -> -applyDeadzoneAndCurve(driverController.getRightX()), () -> driverController.getLeftTriggerAxis() <= .5);
+  private final SwerveCommand swerveCommand = new SwerveCommand(
+    swerveSubsystem,
+    () -> -applyDeadzoneAndCurve(driverController.getLeftX()),
+    () -> -applyDeadzoneAndCurve(driverController.getLeftY()),
+    () -> -applyDeadzoneAndCurve(driverController.getRightX()),
+    () -> driverController.getLeftTriggerAxis() <= .5
+  );
 
   private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
@@ -77,10 +83,6 @@ public class RobotContainer {
       return 0;
     }
     return Math.pow(Math.abs(controllerInput), OUTPUT_CURVE) * controllerInput / Math.abs(controllerInput);
-  }
-
-  public void disabledPeriodic() {
-    swerveSubsystem.disabledPeriodic();
   }
 
   public Command getAutonomousCommand() {

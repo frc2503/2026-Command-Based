@@ -34,13 +34,11 @@ public class RobotContainer {
   private final RetractIntakeArm retractIntake = new RetractIntakeArm(intakeSubsystem);
 
   private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
-  private final LaunchCommand launch = new LaunchCommand(shooterSubsystem, SHOOTER_FLYWHEEL_SPEED);
-  private final LaunchCommand launchFaster = new LaunchCommand(shooterSubsystem, SHOOTER_FLYWHEEL_HIGH_SPEED);
   
   private final FeederSubsystem feederSubsystem = new FeederSubsystem();
-  private final FeedCommand feed = new FeedCommand(feederSubsystem, hopperSubsystem);
 
-  private final SpinUpAndShootCommand spinUpAndShoot = new SpinUpAndShootCommand(shooterSubsystem, feederSubsystem, hopperSubsystem);
+  private final SpinUpAndShootCommand spinUpAndShoot = new SpinUpAndShootCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, SHOOTER_FEEDER_POWER);
+  private final SpinUpAndShootCommand spinUpAndShootFaster = new SpinUpAndShootCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, SHOOTER_FEEDER_HIGH_POWER);
   private final TargetCommand targetAndShoot = new TargetCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, swerveSubsystem);
 
   private final SpitFuelCommand spitFuel = new SpitFuelCommand(intakeSubsystem, hopperSubsystem, feederSubsystem);
@@ -57,9 +55,8 @@ public class RobotContainer {
   private void configureBindings() {
     driverController.a().whileTrue(spitFuel);
     //driverController.x().whileTrue(targetAndShoot);
-    driverController.rightTrigger().whileTrue(feed);
-    driverController.x().whileTrue(launch);
-    driverController.y().whileTrue(launchFaster);
+    driverController.rightTrigger().whileTrue(spinUpAndShoot);
+    driverController.x().whileTrue(spinUpAndShootFaster);
     
     driverController.leftBumper().onTrue(toggleIntake);
     driverController.leftTrigger().whileTrue(intakeFuel);

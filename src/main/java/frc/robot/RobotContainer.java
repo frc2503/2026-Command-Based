@@ -43,8 +43,8 @@ public class RobotContainer {
   
   private final FeederSubsystem feederSubsystem = new FeederSubsystem();
 
-  private final SpinUpAndShootCommand spinUpAndShoot = new SpinUpAndShootCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, SHOOTER_FEEDER_POWER);
-  private final SpinUpAndShootCommand spinUpAndShootFaster = new SpinUpAndShootCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, SHOOTER_FEEDER_HIGH_POWER);
+  private final SpinUpAndShootCommand spinUpAndShoot = new SpinUpAndShootCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, SHOOTER_FLYWHEEL_SPEED, SHOOTER_FEEDER_POWER);
+  private final SpinUpAndShootCommand spinUpAndShootFaster = new SpinUpAndShootCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, SHOOTER_FLYWHEEL_HIGH_SPEED, SHOOTER_FEEDER_HIGH_POWER);
   private final TargetCommand targetAndShoot = new TargetCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, swerveSubsystem);
 
   private final SpitFuelCommand spitFuel = new SpitFuelCommand(intakeSubsystem, hopperSubsystem, feederSubsystem);

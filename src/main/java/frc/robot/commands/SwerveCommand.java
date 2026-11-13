@@ -25,7 +25,11 @@ public class SwerveCommand extends Command {
 
     @Override
     public void execute() {
-        swerveSubsystem.drive(x.getAsDouble(), y.getAsDouble(), rot.getAsDouble(), fieldOriented.getAsBoolean());
+        if (swerveSubsystem.isOnBlueAlliance()) {
+            swerveSubsystem.drive(y.getAsDouble(), x.getAsDouble(), rot.getAsDouble(), fieldOriented.getAsBoolean());
+        } else {
+            swerveSubsystem.drive(-y.getAsDouble(), -x.getAsDouble(), rot.getAsDouble(), fieldOriented.getAsBoolean());
+        }
     }
 
     @Override

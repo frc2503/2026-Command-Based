@@ -23,5 +23,15 @@
     "drive": true,
     "angle": true
   },
+<<<<<<< HEAD
   "absoluteEncoderInverted": false
+=======
+  "absoluteEncoderOffset": 285.205,
+  "absoluteEncoderInverted": false,
+  "location": {
+    "front": 10.875,
+    "left": 10.875
+  },
+  "useCosineCompensator": true
+>>>>>>> b37fe749ca5338474582ba462b7090ba4e0fbf74
 }

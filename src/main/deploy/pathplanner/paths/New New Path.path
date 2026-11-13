@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 12.903349397590361,
-        "y": 2.505120481927711
+        "x": 3.625722891566265,
+        "y": 5.521168674698795
       },
       "prevControl": null,
       "nextControl": {
-        "x": 12.094698795180724,
-        "y": 2.4614096385542172
+        "x": 2.3570328102710407,
+        "y": 5.839942938659058
       },
       "isLocked": false,
-      "linkedName": "Red Left Ramp"
+      "linkedName": "Blue Left Ramp"
     },
     {
       "anchor": {
-        "x": 9.525049928673324,
-        "y": 2.505120481927711
+        "x": 2.1370756062767473,
+        "y": 4.00265335235378
       },
       "prevControl": {
-        "x": 10.16978486843236,
-        "y": 2.4832650602409645
+        "x": 2.123495007132667,
+        "y": 4.872196861626249
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -178.83086067209254
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

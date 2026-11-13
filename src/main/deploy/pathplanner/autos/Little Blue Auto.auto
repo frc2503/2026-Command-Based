@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Red Ramp Left"
+            "pathName": "Little Blue Auto"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "Red",
+  "folder": null,
   "choreoAuto": false
 }

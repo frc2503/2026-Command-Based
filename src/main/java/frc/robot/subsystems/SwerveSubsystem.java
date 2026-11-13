@@ -69,12 +69,8 @@ public class SwerveSubsystem extends SubsystemBase {
     }
 
     public void drive(double x, double y, double rot, boolean fieldOriented) {
-        Translation2d translation = new Translation2d(y, x).times(Constants.MAXIMUM_VELOCITY.in(MetersPerSecond));
+        Translation2d translation = new Translation2d(x, y).times(Constants.MAXIMUM_VELOCITY.in(MetersPerSecond));
         rot *= Constants.MAXIMUM_ANGULAR_VELOCITY.in(RadiansPerSecond);
-        
-        //Apply deadzones
-        translation = translation.getNorm() > Constants.MINIMUM_MODULE_VELOCITY.in(MetersPerSecond) ? translation : Translation2d.kZero;
-        rot = Math.abs(rot) > Constants.MINIMUM_ANGULAR_VELOCITY.in(RadiansPerSecond) ? rot : 0;
 
         if (target.isPresent()) {
             rot = anglePidController.calculate(getPose().getRotation().getDegrees(), target.get().getDegrees());
@@ -113,7 +109,7 @@ public class SwerveSubsystem extends SubsystemBase {
         if (alliance.isPresent()) {
             return alliance.get() == DriverStation.Alliance.Blue;
         }
-        return false;
+        return true;
     }
 
     public Pose2d getPose() {
@@ -162,7 +158,7 @@ public class SwerveSubsystem extends SubsystemBase {
         } catch (Exception e) {
             e.printStackTrace();
         }
-  }
+    }
 
     @Override
     public void periodic() {

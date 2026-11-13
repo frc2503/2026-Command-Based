@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.59,
-        "y": 1.7
+        "x": 3.625722891566265,
+        "y": 5.521168674698795
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.6574918445018234,
-        "y": 1.4444203608869675
+        "x": 4.569543509272467,
+        "y": 5.477660485021398
       },
       "isLocked": false,
-      "linkedName": "Alliance 3"
+      "linkedName": "Blue Left Ramp"
     },
     {
       "anchor": {
-        "x": 0.4421112696148356,
-        "y": 0.6644793152639101
+        "x": 5.966918687589158,
+        "y": 5.521168674698795
       },
       "prevControl": {
-        "x": 0.5360486528344915,
-        "y": 0.3951398908394319
+        "x": 4.8541940085592,
+        "y": 5.749372325249644
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Hub 2"
+      "linkedName": "Blue Left End"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 1.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -179.1185960034178
+    "rotation": 42.47783103661925
   },
   "reversed": false,
   "folder": null,
@@ -50,5 +50,5 @@
     "velocity": 0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

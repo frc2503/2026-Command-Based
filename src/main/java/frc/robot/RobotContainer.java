@@ -3,13 +3,46 @@ package frc.robot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.Constants.OperatorConstants;
-import frc.robot.subsystems.SwerveSubsystem;
+import static frc.robot.Constants.OperatorConstants.*;
+
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
+
+import frc.robot.subsystems.*;
+import frc.robot.commands.*;
 
 public class RobotContainer {
-    private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem();
-    private final CommandXboxController driverController =
-        new CommandXboxController(OperatorConstants.DRIVER_CONTROLLER_PORT);
+  // The driver's controller
+  private final CommandXboxController driverController = new CommandXboxController(DRIVER_CONTROLLER_PORT);
+
+  // The operator's controller
+  //private final CommandXboxController operatorController = new CommandXboxController(OPERATOR_CONTROLLER_PORT);
+
+  private final VisionSubsystem visionSubsystem = new VisionSubsystem();
+
+  private final SwerveSubsystem swerveSubsystem = new SwerveSubsystem(visionSubsystem);
+  private final SwerveCommand swerveCommand = new SwerveCommand(swerveSubsystem, () -> -driverController.getLeftX(), () -> -driverController.getLeftY(), () -> -driverController.getRightX(), () -> true);
+
+  private final HopperSubsystem hopperSubsystem = new HopperSubsystem();
+
+  private final IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  private final IntakeFuelCommand intakeFuel = new IntakeFuelCommand(intakeSubsystem, hopperSubsystem);
+  private final ToggleIntakeArm toggleIntake = new ToggleIntakeArm(intakeSubsystem);
+  private final ExtendIntakeArm extendIntake = new ExtendIntakeArm(intakeSubsystem);
+  private final RetractIntakeArm retractIntake = new RetractIntakeArm(intakeSubsystem);
+
+  private final ShooterSubsystem shooterSubsystem = new ShooterSubsystem();
+  private final LaunchCommand launch = new LaunchCommand(shooterSubsystem);
+  
+  private final FeederSubsystem feederSubsystem = new FeederSubsystem();
+  private final FeedCommand feed = new FeedCommand(feederSubsystem, hopperSubsystem);
+
+  private final SpinUpAndShootCommand spinUpAndShoot = new SpinUpAndShootCommand(shooterSubsystem, feederSubsystem, hopperSubsystem);
+  private final TargetCommand targetAndShoot = new TargetCommand(shooterSubsystem, feederSubsystem, hopperSubsystem, swerveSubsystem);
+
+  private final SpitFuelCommand spitFuel = new SpitFuelCommand(intakeSubsystem, hopperSubsystem, feederSubsystem);
+
+  private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
         // Default teleop swerve drive using the left stick for translation and right stick X for rotation
@@ -28,16 +61,23 @@ public class RobotContainer {
         configureBindings();
     }
 
-    private void configureBindings() {
-        // Press A on the Xbox controller to toggle TurnToLimelight on and off
-        driverController.a().toggleOnTrue(
-            new TurnToLimelight(
-                swerveSubsystem,
-                () -> -driverController.getLeftY(),
-                () -> -driverController.getLeftX()
-            )
-        );
-    }
+  private void configureBindings() {
+    driverController.a().whileTrue(spitFuel);
+    driverController.x().whileTrue(targetAndShoot);
+
+    driverController.rightTrigger().whileTrue(launch);
+    driverController.rightBumper().whileTrue(feed);
+    driverController.leftBumper().onTrue(toggleIntake);
+    driverController.leftTrigger().whileTrue(intakeFuel);
+  }
+
+  private void configureNamedCommands() {
+    NamedCommands.registerCommand("intakeFuel", intakeFuel);
+    NamedCommands.registerCommand("extendIntake", extendIntake);
+    NamedCommands.registerCommand("retractIntake", retractIntake);
+    NamedCommands.registerCommand("spinUpAndShoot", spinUpAndShoot);
+    NamedCommands.registerCommand("targetAndShoot", targetAndShoot);
+  }
 
     public Command getAutonomousCommand() {
         return Commands.none();

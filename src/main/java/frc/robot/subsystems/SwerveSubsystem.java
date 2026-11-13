@@ -64,6 +64,10 @@ public class SwerveSubsystem extends SubsystemBase {
         configureAutoBuilder();
     }
 
+    public SwerveSubsystem() {
+        
+    }
+
     public void drive(double x, double y, double rot, boolean fieldOriented) {
         Translation2d translation = new Translation2d(y, x).times(Constants.MAXIMUM_VELOCITY.in(MetersPerSecond));
         rot *= Constants.MAXIMUM_ANGULAR_VELOCITY.in(RadiansPerSecond);

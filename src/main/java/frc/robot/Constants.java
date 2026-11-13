@@ -13,10 +13,10 @@ import edu.wpi.first.units.measure.Time;
 public final class Constants {
   public static final NetworkTableInstance NETWORK_TABLE = NetworkTableInstance.getDefault();
 
-  public static final LinearVelocity MAXIMUM_VELOCITY = Units.MetersPerSecond.of(4);
+  public static final LinearVelocity MAXIMUM_VELOCITY = Units.MetersPerSecond.of(2);
   public static final AngularVelocity MAXIMUM_ANGULAR_VELOCITY = Units.DegreesPerSecond.of(420);
   public static final LinearVelocity MAXIMUM_MODULE_VELOCITY = Units.MetersPerSecond.of(5);
-  public static final AngularVelocity MINIMUM_ANGULAR_VELOCITY = Units.DegreesPerSecond.of(5);
+  public static final AngularVelocity MINIMUM_ANGULAR_VELOCITY = Units.DegreesPerSecond.of(15);
   public static final LinearVelocity MINIMUM_MODULE_VELOCITY = Units.MetersPerSecond.of(.8);
 
   public static final Time FUEL_FLIGHT_TIME = Units.Second.of(3);
